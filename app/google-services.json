@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "718452668282",
+    "firebase_url": "https://battle-pass-ss.firebaseio.com",
+    "project_id": "battle-pass-ss",
+    "storage_bucket": "battle-pass-ss.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:718452668282:android:709bdd452dffdbf3",
+        "android_client_info": {
+          "package_name": "com.challenges.battleroyale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "718452668282-fr6tdes1d2lkrjsvcne515tlp7b8ohjm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.challenges.battleroyale",
+            "certificate_hash": "7ae91f85b3c22d9a9fd4cdebe6f88e07bfc6fed4"
+          }
+        },
+        {
+          "client_id": "718452668282-f8melca4q14kjj4cvht99a1662rdevsj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDO2o7yypJe2gXXc1-fOx7iggKGVQ5isXA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "718452668282-f8melca4q14kjj4cvht99a1662rdevsj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
