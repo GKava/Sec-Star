@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,8 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
@@ -76,6 +73,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         } else {
             Toast.makeText(getContext(),"Internet connection error :(",LENGTH_SHORT).show();
         }
+
+
     }
 
 

@@ -1,65 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ChallengesFragment">
-
-
-    <TextView
-        android:id="@+id/tv"
-        android:fontFamily="@font/font1"
-        android:textColor="#000"
-        android:textSize="25sp"
-        android:gravity="center"
-        android:layout_gravity="center"
+    tools:context=".MainActivity">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tasks of the week" />
+        android:layout_height="match_parent"
+        android:padding="0dp" />
 
-    <com.github.ybq.android.spinkit.SpinKitView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/spin_kit"
-        style="@style/SpinKitView.Large.WanderingCubes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:SpinKit_Color="@color/snapkit" />
 
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/image1"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/test"/>
-
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/image2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/test"/>
-
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/image3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/test"/>
-
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/image4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/test"/>
-
-    <ImageView
-        android:layout_gravity="center"
-        android:id="@+id/image5"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/test"/>
-
-</LinearLayout>
+</FrameLayout>

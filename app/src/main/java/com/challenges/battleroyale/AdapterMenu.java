@@ -49,12 +49,10 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
         Glide.with(holder.itemView.getContext()).load(R.drawable.lock)
                 .thumbnail(0.5f)
                 .into(holder.image);
-//            holder.week.setText("Closed");
         } else {
             Glide.with(holder.itemView.getContext()).load(R.drawable.unlock)
                     .thumbnail(0.5f)
                     .into(holder.image);
-//            holder.week.setText("Open");
         }
     }
 

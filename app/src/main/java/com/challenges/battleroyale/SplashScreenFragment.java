@@ -52,10 +52,6 @@ public class SplashScreenFragment extends Fragment {
 
             }
         },3000);
-//        if (hasConnection(getActivity())==true) {
-//            handler.postDelayed((Runnable) this,1000);
-//        }
-
     }
 
     public static boolean hasConnection(final Context context)
@@ -78,5 +74,4 @@ public class SplashScreenFragment extends Fragment {
         }
         return false;
     }
-
 }

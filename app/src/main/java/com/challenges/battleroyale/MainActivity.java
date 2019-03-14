@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String WEEK9TXT= "week9txt";
     public static final String WEEK10TXT= "week10txt";
 
+    public static final String SEASON_STORAGE= "seasonStorage";
+
     FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     FragmentManager fragmentManager;
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     mFirebaseRemoteConfig.activateFetched();
                     boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10;
-                    String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt;
+                    String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage;
 
                     week1 = mFirebaseRemoteConfig.getBoolean("week1");
                     week2 = mFirebaseRemoteConfig.getBoolean("week2");
@@ -165,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
                     week8txt = mFirebaseRemoteConfig.getString("week8txt");
                     week9txt = mFirebaseRemoteConfig.getString("week9txt");
                     week10txt = mFirebaseRemoteConfig.getString("week10txt");
+
+                    seasonStorage = mFirebaseRemoteConfig.getString("seasonStorage");
 
                     SharedPreferences.Editor editor = mSettings.edit();
 
@@ -189,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString(WEEK8TXT, week8txt);
                     editor.putString(WEEK9TXT, week9txt);
                     editor.putString(WEEK10TXT, week10txt);
+                    editor.putString(SEASON_STORAGE, seasonStorage);
 
 
                     editor.apply();
