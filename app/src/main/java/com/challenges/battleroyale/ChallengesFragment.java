@@ -1,5 +1,7 @@
 package com.challenges.battleroyale;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK1;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK2;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK3;
+import static com.challenges.battleroyale.MainActivity.WEEK1;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,11 +27,12 @@ public class ChallengesFragment extends Fragment {
     private int week_number;
     private int imageCount;
     private String season_storage;
-    String seasonNumberConfig = "season8";
+    String seasonStorage;
     private RecyclerView recyclerView;
     private AdapterChallenges adapter;
     private LinearLayoutManager verticalLinearLayoutManager;
-
+    private SharedPreferences mSettings;
+    private int imageCountWeek1,imageCountWeek2,imageCountWeek3;
 
 
     public ChallengesFragment() {
@@ -34,132 +43,70 @@ public class ChallengesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenges, container, false);
-
+        mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
             week_number = bundle.getInt("week_number");
+            seasonStorage = bundle.getString("season_storage");
         }
 
         recyclerView = view.findViewById(R.id.recycler);
-        verticalLinearLayoutManager = new GridLayoutManager(getActivity(), 2);
+        verticalLinearLayoutManager = new GridLayoutManager(getActivity(), 1);
         verticalLinearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int width = size.x/2;
+        int width = size.x;
 
         adapter = new AdapterChallenges(width);
         recyclerView.setAdapter(adapter);
-        adapter.addMessage(new Item( week_number, imageCount, season_storage));
 
+        if (week_number==1){
+            imageCount = imageCountWeek1;
+        }else if (week_number==2){
+            imageCount = imageCountWeek2;
+        }else if (week_number==3){
+            imageCount = imageCountWeek3;
+        }
+        //сделать 10 недель во всех класса с COUNT
 
+        String weekNum = String.valueOf(week_number);
+
+        if (imageCount==3) {
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+        }
+        if (imageCount==4) {
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+        }
+        if (imageCount==5) {
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+            adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+        }
 
         return view;
-
-
-
     }
 
-//    public void loadImgRes(int paramBundle) {
-//        FirebaseStorage storage = FirebaseStorage.getInstance("gs://fortnitestarschallenge.appspot.com");
-//
-//        //сброс кеша при старте нового сезона
-//        if (paramBundle == 1) {
-//            loadImgRes(storage, "week1_1.jpg", image1);
-//            loadImgRes(storage, "week1_2.jpg", image2);
-//            loadImgRes(storage, "week1_3.jpg", image3);
-//            loadImgRes(storage, "week1_4.jpg", image4);
-//            loadImgRes(storage, "week1_5.jpg", image5);
-//        }
-//        if (paramBundle == 2) {
-//            loadImgRes(storage, "week2_1.jpg", image1);
-//            loadImgRes(storage, "week2_2.jpg", image2);
-//            loadImgRes(storage, "week2_3.jpg", image3);
-//            loadImgRes(storage, "week2_4.jpg", image4);
-//            loadImgRes(storage, "week2_5.jpg", image5);
-//        }
-//        if (paramBundle == 3) {
-//            loadImgRes(storage, "week3_1.jpg", image1);
-//            loadImgRes(storage, "week3_2.jpg", image2);
-//            loadImgRes(storage, "week3_3.jpg", image3);
-//            loadImgRes(storage, "week3_4.jpg", image4);
-//            loadImgRes(storage, "week3_5.jpg", image5);
-//        }
-//        if (paramBundle == 4) {
-//            loadImgRes(storage, "week4_1.jpg", image1);
-//            loadImgRes(storage, "week4_2.jpg", image2);
-//            loadImgRes(storage, "week4_3.jpg", image3);
-//            loadImgRes(storage, "week4_4.jpg", image4);
-//            loadImgRes(storage, "week4_5.jpg", image5);
-//        }
-//        if (paramBundle == 5) {
-//            loadImgRes(storage, "week5_1.jpg", image1);
-//            loadImgRes(storage, "week5_2.jpg", image2);
-//            loadImgRes(storage, "week5_3.jpg", image3);
-//            loadImgRes(storage, "week5_4.jpg", image4);
-//            loadImgRes(storage, "week5_5.jpg", image5);
-//        }
-//        if (paramBundle == 6) {
-//            loadImgRes(storage, "week6_1.jpg", image1);
-//            loadImgRes(storage, "week6_2.jpg", image2);
-//            loadImgRes(storage, "week6_3.jpg", image3);
-//            loadImgRes(storage, "week6_4.jpg", image4);
-//            loadImgRes(storage, "week6_5.jpg", image5);
-//        }
-//        if (paramBundle == 7) {
-//            loadImgRes(storage, "week7_1.jpg", image1);
-//            loadImgRes(storage, "week7_2.jpg", image2);
-//            loadImgRes(storage, "week7_3.jpg", image3);
-//            loadImgRes(storage, "week7_4.jpg", image4);
-//            loadImgRes(storage, "week7_5.jpg", image5);
-//        }
-//        if (paramBundle == 8) {
-//            loadImgRes(storage, "week8_1.jpg", image1);
-//            loadImgRes(storage, "week8_2.jpg", image2);
-//            loadImgRes(storage, "week8_3.jpg", image3);
-//            loadImgRes(storage, "week8_4.jpg", image4);
-//            loadImgRes(storage, "week8_5.jpg", image5);
-//        }
-//        if (paramBundle == 9) {
-//            loadImgRes(storage, "week9_1.jpg", image1);
-//            loadImgRes(storage, "week9_2.jpg", image2);
-//            loadImgRes(storage, "week9_3.jpg", image3);
-//            loadImgRes(storage, "week9_4.jpg", image4);
-//            loadImgRes(storage, "week9_5.jpg", image5);
-//        }
-//        if (paramBundle == 10) {
-//            loadImgRes(storage, "week10_1.jpg", image1);
-//            loadImgRes(storage, "week10_2.jpg", image2);
-//            loadImgRes(storage, "week10_3.jpg", image3);
-//            loadImgRes(storage, "week10_4.jpg", image4);
-//            loadImgRes(storage, "week10_5.jpg", image5);
-//        }
-//    }
-//
-//
-//    public void loadImgRes(FirebaseStorage storage, String imageName, final ImageView targetView) {
-//        StorageReference storageRef = storage.getReference().child(seasonNumberConfig+imageName);
-//
-//        Glide.with(this /* context */)
-//                .load(storageRef)
-//                .addListener(new RequestListener<Drawable>() {
-//                    @Override
-//                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//
-//
-//                        return false;
-//                    }
-//
-//                    @Override
-//                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//
-//
-//                        return false;
-//                    }
-//                })
-//                .into(targetView);
-//    }
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mSettings.contains(WEEK1)) {
+            imageCountWeek1 = mSettings.getInt(IMAGE_COUNT_WEEK1, 0);
+        }
+        if (mSettings.contains(WEEK1)) {
+            imageCountWeek2 = mSettings.getInt(IMAGE_COUNT_WEEK2, 0);
+        }
+        if (mSettings.contains(WEEK1)) {
+            imageCountWeek3 = mSettings.getInt(IMAGE_COUNT_WEEK3, 0);
+        }
+    }
 }

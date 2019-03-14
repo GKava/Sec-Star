@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
+import static com.challenges.battleroyale.MainActivity.SEASON_STORAGE;
 import static com.challenges.battleroyale.MainActivity.WEEK1;
 import static com.challenges.battleroyale.MainActivity.WEEK10;
 import static com.challenges.battleroyale.MainActivity.WEEK10TXT;
@@ -51,9 +52,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
     private AdapterMenu adapter;
     private SharedPreferences mSettings;
     private boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10 ;
-    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt;
-    public MainFragment() {
-        // Required empty public constructor
+    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage;
+    public MainFragment() {// Required empty public constructor
     }
 
     @Override
@@ -64,6 +64,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         Fragment fr = new ChallengesFragment();
         Bundle args = new Bundle();
         args.putInt("week_number", position+1);
+        args.putString("season_storage", seasonStorage);
+        args.putString("season_storage", seasonStorage);
         fr.setArguments(args);
 
         getActivity().getSupportFragmentManager().beginTransaction()
@@ -216,6 +218,15 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
             week10txt = mSettings.getString(WEEK10TXT, "");
         }
 
+
+        if (mSettings.contains(WEEK10TXT)) {
+            week10txt = mSettings.getString(WEEK10TXT, "");
+        }
+
+
+        if (mSettings.contains(SEASON_STORAGE)) {
+            seasonStorage = mSettings.getString(SEASON_STORAGE, "");
+        }
 
     }
 

@@ -17,13 +17,13 @@
         android:orientation="horizontal"
         android:background="@drawable/background_rarity">
         <com.github.ybq.android.spinkit.SpinKitView
+            android:visibility="gone"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/progress_bar"
             style="@style/SpinKitView.Large.DoubleBounce"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:paddingTop="150dp"
             app:SpinKit_Color="@color/snapkit" />
 
         <ImageView
