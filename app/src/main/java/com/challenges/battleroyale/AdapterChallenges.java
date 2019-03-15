@@ -1,11 +1,8 @@
 package com.challenges.battleroyale;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +16,11 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
-import java.io.IOException;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.ViewHolder>  {
@@ -34,7 +28,7 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
     private ArrayList<ItemChallenges> items = new ArrayList<ItemChallenges>();
     private int width;
     public static int fragment_id;
-
+    private StorageReference mStorageRef;
 
     public AdapterChallenges(int width) {
         super();
@@ -49,12 +43,35 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterChallenges.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final AdapterChallenges.ViewHolder holder, final int position) {
         final int pos = position;
-        FirebaseStorage storage = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/");
+//        FirebaseStorage storage = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/");
+        final ItemChallenges item = items.get(position);
+        mStorageRef = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/").getReference().child(item.getSeason_storage()+"/"+item.getSeason_path()+".jpg");
+//        mStorageRef = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/").getReference().child("season8/week1_1.jpg");
 
-            Glide.with(holder.itemView.getContext()).load(R.drawable.unlock)
+            holder.text.setText(item.getSeason_path()+"\n"+item.season_storage);
+            Glide.with(holder.itemView.getContext()).load(mStorageRef)
                     .thumbnail(0.5f)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            holder.progressVisibitity(false);
+                            holder.text.setText("ERROR :(" );
+                            return false;
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            holder.progressVisibitity(false);
+                            holder.text.setText("Okay :)");
+                            return false;
+                        }
+                    })
+                    .into(holder.image);
+
+//                    Glide.with(holder.itemView.getContext()).load(R.drawable.unlock)
+//                    .thumbnail(0.5f)
 //                    .listener(new RequestListener<Drawable>() {
 //                        @Override
 //                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -70,7 +87,7 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
 //                            return false;
 //                        }
 //                    })
-                    .into(holder.image);
+//                    .into(holder.image);
 
     }
 
@@ -95,14 +112,24 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView text;
         private ImageView image;
         private ProgressBar progress_bar;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            text = itemView.findViewById(R.id.text);
             image = itemView.findViewById(R.id.image);
             progress_bar =  itemView.findViewById(R.id.progress_bar);
+        }
+
+        public void progressVisibitity(boolean b){
+            if (b == true) {
+                progress_bar.setVisibility(View.VISIBLE);
+            } else {
+                progress_bar.setVisibility(View.GONE);
+            }
         }
     }
 

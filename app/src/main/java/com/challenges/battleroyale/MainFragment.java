@@ -217,8 +217,6 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         if (mSettings.contains(WEEK10TXT)) {
             week10txt = mSettings.getString(WEEK10TXT, "");
         }
-
-
         if (mSettings.contains(WEEK10TXT)) {
             week10txt = mSettings.getString(WEEK10TXT, "");
         }

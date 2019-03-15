@@ -3,6 +3,7 @@ package com.challenges.battleroyale;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         FirebaseApp.initializeApp(this);
 
         mSettings = this.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
@@ -151,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
 
                     boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10;
                     String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage;
-                    int imageCountWeek1,imageCountWeek2,imageCountWeek3;
+                    long imageCountWeek1,imageCountWeek2,imageCountWeek3;
 
                     week1 = mFirebaseRemoteConfig.getBoolean("week1");
                     week2 = mFirebaseRemoteConfig.getBoolean("week2");
@@ -175,11 +177,11 @@ public class MainActivity extends AppCompatActivity {
                     week9txt = mFirebaseRemoteConfig.getString("week9txt");
                     week10txt = mFirebaseRemoteConfig.getString("week10txt");
 
-                    imageCountWeek1 = (int) mFirebaseRemoteConfig.getLong("imageCountWeek1");
-                    imageCountWeek2 = (int) mFirebaseRemoteConfig.getLong("imageCountWeek2");
-                    imageCountWeek3 = (int) mFirebaseRemoteConfig.getLong("imageCountWeek3");
+                    imageCountWeek1 =  mFirebaseRemoteConfig.getLong("imageCountWeek1");
+                    imageCountWeek2 =  mFirebaseRemoteConfig.getLong("imageCountWeek2");
+                    imageCountWeek3 =  mFirebaseRemoteConfig.getLong("imageCountWeek3");
 
-                    seasonStorage = mFirebaseRemoteConfig.getString("seasonStorage");
+                    seasonStorage = mFirebaseRemoteConfig.getString("season_number");
 
                     SharedPreferences.Editor editor = mSettings.edit();
 
@@ -205,12 +207,9 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString(WEEK9TXT, week9txt);
                     editor.putString(WEEK10TXT, week10txt);
 
-
-                    editor.putInt(IMAGE_COUNT_WEEK1, imageCountWeek1);
-                    editor.putInt(IMAGE_COUNT_WEEK2, imageCountWeek2);
-                    editor.putInt(IMAGE_COUNT_WEEK3, imageCountWeek3);
-
-
+                    editor.putLong(IMAGE_COUNT_WEEK1, imageCountWeek1);
+                    editor.putLong(IMAGE_COUNT_WEEK2, imageCountWeek2);
+                    editor.putLong(IMAGE_COUNT_WEEK3, imageCountWeek3);
 
                     editor.putString(SEASON_STORAGE, seasonStorage);
 
