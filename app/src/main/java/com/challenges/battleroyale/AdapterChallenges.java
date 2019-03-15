@@ -47,22 +47,20 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
         final ItemChallenges item = items.get(position);
         mStorageRef = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/").getReference().child(item.getSeason_storage()+"/"+item.getSeason_path()+".jpg");
 
-
-            holder.text.setText(item.getSeason_path()+"\n"+item.season_storage);
             Glide.with(holder.itemView.getContext()).load(mStorageRef)
                     .thumbnail(0.5f)
                     .listener(new RequestListener<Drawable>() {
                         @Override
                         public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                             holder.progressVisibitity(false);
-                            holder.text.setText("ERROR :(" );
+
                             return false;
                         }
 
                         @Override
                         public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                             holder.progressVisibitity(false);
-                            holder.text.setText("Okay :)");
+
                             return false;
                         }
                     })
@@ -89,15 +87,11 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        TextView text;
         private ImageView image;
         private ProgressBar progress_bar;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
-            text = itemView.findViewById(R.id.text);
             image = itemView.findViewById(R.id.image);
             progress_bar =  itemView.findViewById(R.id.progress_bar);
         }
