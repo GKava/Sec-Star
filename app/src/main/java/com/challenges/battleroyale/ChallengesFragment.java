@@ -18,8 +18,14 @@ import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
 import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK1;
 import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK2;
 import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK3;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK4;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK5;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK6;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK7;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK8;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK9;
+import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK10;
 import static com.challenges.battleroyale.MainActivity.SEASON_STORAGE;
-import static com.challenges.battleroyale.MainActivity.WEEK1;
 
 
 /**
@@ -28,13 +34,12 @@ import static com.challenges.battleroyale.MainActivity.WEEK1;
 public class ChallengesFragment extends Fragment {
     private int week_number;
     private String season_storage;
-    private String seasonStorage;
     private RecyclerView recyclerView;
     private AdapterChallenges adapter;
     private LinearLayoutManager verticalLinearLayoutManager;
     private SharedPreferences mSettings;
     private long imageCount;
-    private long imageCountWeek1,imageCountWeek2,imageCountWeek3;
+    private long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
 
 
     public ChallengesFragment() {
@@ -50,7 +55,6 @@ public class ChallengesFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             week_number = bundle.getInt("week_number");
-        //    seasonStorage = bundle.getString("season_storage");
         }
 
         recyclerView = view.findViewById(R.id.recycler);
@@ -65,8 +69,42 @@ public class ChallengesFragment extends Fragment {
         adapter = new AdapterChallenges(width);
         recyclerView.setAdapter(adapter);
 
+        if (mSettings.contains(SEASON_STORAGE)) {
+            season_storage = mSettings.getString(SEASON_STORAGE, "");
+        }
+
 
         // получаем  imageCount из CFG в зависимости от недели
+        if (mSettings.contains(IMAGE_COUNT_WEEK1)) {
+            imageCountWeek1 = mSettings.getLong(IMAGE_COUNT_WEEK1, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK2)) {
+            imageCountWeek2 = mSettings.getLong(IMAGE_COUNT_WEEK2, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK3)) {
+            imageCountWeek3 = mSettings.getLong(IMAGE_COUNT_WEEK3, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK4)) {
+            imageCountWeek4 = mSettings.getLong(IMAGE_COUNT_WEEK4, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK5)) {
+            imageCountWeek5 = mSettings.getLong(IMAGE_COUNT_WEEK5, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK6)) {
+            imageCountWeek6 = mSettings.getLong(IMAGE_COUNT_WEEK6, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK7)) {
+            imageCountWeek7 = mSettings.getLong(IMAGE_COUNT_WEEK7, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK8)) {
+            imageCountWeek8 = mSettings.getLong(IMAGE_COUNT_WEEK8, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK9)) {
+            imageCountWeek9 = mSettings.getLong(IMAGE_COUNT_WEEK9, 0);
+        }
+        if (mSettings.contains(IMAGE_COUNT_WEEK10)) {
+            imageCountWeek10 = mSettings.getLong(IMAGE_COUNT_WEEK10, 0);
+        }
 
         if (week_number==1){
             imageCount = imageCountWeek1;
@@ -74,69 +112,102 @@ public class ChallengesFragment extends Fragment {
             imageCount = imageCountWeek2;
         }else if (week_number==3){
             imageCount = imageCountWeek3;
+        }else if (week_number==4){
+            imageCount = imageCountWeek4;
+        }else if (week_number==5){
+            imageCount = imageCountWeek5;
+        }else if (week_number==6){
+            imageCount = imageCountWeek6;
+        }else if (week_number==7){
+            imageCount = imageCountWeek7;
+        }else if (week_number==8){
+            imageCount = imageCountWeek8;
+        }else if (week_number==9){
+            imageCount = imageCountWeek9;
+        }else if (week_number==10){
+            imageCount = imageCountWeek10;
         }
-        //сделать 10 недель во всех класса с COUNT
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 String weekNum = String.valueOf(week_number);
 
-//        if (imageCount==3) {
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
-//        }
-        if (imageCount==4) {
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
-        }
-        if (imageCount==5) {
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
-        }
-        if (imageCount==6) {
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_6", season_storage));
-        }
-        if (imageCount==7) {
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
-            adapter.addMessage(new ItemChallenges("week"+weekNum+"_7", season_storage));
-        }
+                if (imageCount==1) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                }
+                if (imageCount==2) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                }
+                if (imageCount==3) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                }
+                if (imageCount==4) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                }
+                if (imageCount==5) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+                }
+                if (imageCount==6) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_6", season_storage));
+                }
+                if (imageCount==7) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_7", season_storage));
+                }
+                if (imageCount==8) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_7", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_8", season_storage));
+                }
+                if (imageCount==9) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_7", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_8", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_9", season_storage));
+                }
+                if (imageCount==10) {
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_2", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_3", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_4", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_5", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_7", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_8", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_9", season_storage));
+                    adapter.addMessage(new ItemChallenges("week"+weekNum+"_10", season_storage));
+                }
             }
         },0);
 
 
         return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (mSettings.contains(WEEK1)) {
-            imageCountWeek1 = mSettings.getLong(IMAGE_COUNT_WEEK1, 0);
-        }
-        if (mSettings.contains(WEEK1)) {
-            imageCountWeek2 = mSettings.getLong(IMAGE_COUNT_WEEK2, 0);
-        }
-        if (mSettings.contains(WEEK1)) {
-            imageCountWeek3 = mSettings.getLong(IMAGE_COUNT_WEEK3, 0);
-        }
-        if (mSettings.contains(SEASON_STORAGE)) {
-            season_storage = mSettings.getString(SEASON_STORAGE, "");
-        }
     }
 }

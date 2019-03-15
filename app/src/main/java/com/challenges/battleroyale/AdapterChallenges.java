@@ -44,11 +44,9 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
 
     @Override
     public void onBindViewHolder(@NonNull final AdapterChallenges.ViewHolder holder, final int position) {
-        final int pos = position;
-//        FirebaseStorage storage = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/");
         final ItemChallenges item = items.get(position);
         mStorageRef = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/").getReference().child(item.getSeason_storage()+"/"+item.getSeason_path()+".jpg");
-//        mStorageRef = FirebaseStorage.getInstance("gs://battle-pass-ss.appspot.com/").getReference().child("season8/week1_1.jpg");
+
 
             holder.text.setText(item.getSeason_path()+"\n"+item.season_storage);
             Glide.with(holder.itemView.getContext()).load(mStorageRef)
@@ -69,26 +67,6 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
                         }
                     })
                     .into(holder.image);
-
-//                    Glide.with(holder.itemView.getContext()).load(R.drawable.unlock)
-//                    .thumbnail(0.5f)
-//                    .listener(new RequestListener<Drawable>() {
-//                        @Override
-//                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//
-//
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//
-//
-//                            return false;
-//                        }
-//                    })
-//                    .into(holder.image);
-
     }
 
     @NonNull

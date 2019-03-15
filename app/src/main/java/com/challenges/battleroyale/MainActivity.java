@@ -49,9 +49,17 @@ public class MainActivity extends AppCompatActivity {
     public static final String WEEK10TXT= "week10txt";
 
 
-    public static final String IMAGE_COUNT_WEEK1= "imageCountWeek1";
-    public static final String IMAGE_COUNT_WEEK2= "imageCountWeek2";
-    public static final String IMAGE_COUNT_WEEK3= "imageCountWeek3";
+    public static final String IMAGE_COUNT_WEEK1= "image_count_week1";
+    public static final String IMAGE_COUNT_WEEK2= "image_count_week2";
+    public static final String IMAGE_COUNT_WEEK3= "image_count_week3";
+    public static final String IMAGE_COUNT_WEEK4= "image_count_week4";
+    public static final String IMAGE_COUNT_WEEK5= "image_count_week5";
+    public static final String IMAGE_COUNT_WEEK6= "image_count_week6";
+    public static final String IMAGE_COUNT_WEEK7= "image_count_week7";
+    public static final String IMAGE_COUNT_WEEK8= "image_count_week8";
+    public static final String IMAGE_COUNT_WEEK9= "image_count_week9";
+    public static final String IMAGE_COUNT_WEEK10= "image_count_week0";
+
 
     public static final String SEASON_STORAGE= "season_number";
 
@@ -153,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
                     boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10;
                     String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage;
-                    long imageCountWeek1,imageCountWeek2,imageCountWeek3;
+                    long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
 
                     week1 = mFirebaseRemoteConfig.getBoolean("week1");
                     week2 = mFirebaseRemoteConfig.getBoolean("week2");
@@ -177,9 +185,16 @@ public class MainActivity extends AppCompatActivity {
                     week9txt = mFirebaseRemoteConfig.getString("week9txt");
                     week10txt = mFirebaseRemoteConfig.getString("week10txt");
 
-                    imageCountWeek1 =  mFirebaseRemoteConfig.getLong("imageCountWeek1");
-                    imageCountWeek2 =  mFirebaseRemoteConfig.getLong("imageCountWeek2");
-                    imageCountWeek3 =  mFirebaseRemoteConfig.getLong("imageCountWeek3");
+                    imageCountWeek1 =  mFirebaseRemoteConfig.getLong("image_count_week1");
+                    imageCountWeek2 =  mFirebaseRemoteConfig.getLong("image_count_week2");
+                    imageCountWeek3 =  mFirebaseRemoteConfig.getLong("image_count_week3");
+                    imageCountWeek4 =  mFirebaseRemoteConfig.getLong("image_count_week4");
+                    imageCountWeek5 =  mFirebaseRemoteConfig.getLong("image_count_week5");
+                    imageCountWeek6 =  mFirebaseRemoteConfig.getLong("image_count_week6");
+                    imageCountWeek7 =  mFirebaseRemoteConfig.getLong("image_count_week7");
+                    imageCountWeek8 =  mFirebaseRemoteConfig.getLong("image_count_week8");
+                    imageCountWeek9 =  mFirebaseRemoteConfig.getLong("image_count_week9");
+                    imageCountWeek10 =  mFirebaseRemoteConfig.getLong("image_count_week10");
 
                     seasonStorage = mFirebaseRemoteConfig.getString("season_number");
 
@@ -210,6 +225,13 @@ public class MainActivity extends AppCompatActivity {
                     editor.putLong(IMAGE_COUNT_WEEK1, imageCountWeek1);
                     editor.putLong(IMAGE_COUNT_WEEK2, imageCountWeek2);
                     editor.putLong(IMAGE_COUNT_WEEK3, imageCountWeek3);
+                    editor.putLong(IMAGE_COUNT_WEEK4, imageCountWeek4);
+                    editor.putLong(IMAGE_COUNT_WEEK5, imageCountWeek5);
+                    editor.putLong(IMAGE_COUNT_WEEK6, imageCountWeek6);
+                    editor.putLong(IMAGE_COUNT_WEEK7, imageCountWeek7);
+                    editor.putLong(IMAGE_COUNT_WEEK8, imageCountWeek8);
+                    editor.putLong(IMAGE_COUNT_WEEK9, imageCountWeek9);
+                    editor.putLong(IMAGE_COUNT_WEEK10, imageCountWeek10);
 
                     editor.putString(SEASON_STORAGE, seasonStorage);
 

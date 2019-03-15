@@ -86,43 +86,43 @@
     </entry>
 
     <entry>
-        <key>imageCountWeek1</key>
+        <key>image_count_week1</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek2</key>
+        <key>image_count_week2</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek3</key>
+        <key>image_count_week3</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek4</key>
+        <key>image_count_week4</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek5</key>
+        <key>image_count_week5</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek6</key>
+        <key>image_count_week6</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek7</key>
+        <key>image_count_week7</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek8</key>
+        <key>image_count_week8</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek9</key>
+        <key>image_count_week9</key>
         <value>0</value>
     </entry>
     <entry>
-        <key>imageCountWeek10</key>
+        <key>image_count_week10</key>
         <value>0</value>
     </entry>
 </defaultsMap>
