@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String WEEK9TXT= "week9txt";
     public static final String WEEK10TXT= "week10txt";
 
-
     public static final String IMAGE_COUNT_WEEK1= "image_count_week1";
     public static final String IMAGE_COUNT_WEEK2= "image_count_week2";
     public static final String IMAGE_COUNT_WEEK3= "image_count_week3";
@@ -63,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String IMAGE_COUNT_WEEK9= "image_count_week9";
     public static final String IMAGE_COUNT_WEEK10= "image_count_week0";
 
-
-    public static final String SEASON_STORAGE= "season_number";
+    public static final String SEASON_NAME= "season_name";
+    public static final String SEASON_STORAGE= "storage_path";
 
     FirebaseRemoteConfig mFirebaseRemoteConfig;
     InterstitialAd mInterstitialAd;
@@ -197,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     mFirebaseRemoteConfig.activateFetched();
 
                     boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10;
-                    String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage;
+                    String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage,season_name;
                     long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
 
                     week1 = mFirebaseRemoteConfig.getBoolean("week1");
@@ -233,7 +232,9 @@ public class MainActivity extends AppCompatActivity {
                     imageCountWeek9 =  mFirebaseRemoteConfig.getLong("image_count_week9");
                     imageCountWeek10 =  mFirebaseRemoteConfig.getLong("image_count_week10");
 
-                    seasonStorage = mFirebaseRemoteConfig.getString("season_number");
+                    seasonStorage = mFirebaseRemoteConfig.getString("storage_path");
+
+                    season_name = mFirebaseRemoteConfig.getString("season_name");
 
                     SharedPreferences.Editor editor = mSettings.edit();
 
@@ -271,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.putLong(IMAGE_COUNT_WEEK10, imageCountWeek10);
 
                     editor.putString(SEASON_STORAGE, seasonStorage);
+                    editor.putString(SEASON_NAME, season_name);
 
                     editor.apply();
                 }

@@ -1,5 +1,6 @@
 package com.challenges.battleroyale;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -43,16 +44,20 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
     public void onBindViewHolder(@NonNull AdapterMenu.ViewHolder holder, final int position) {
        // final int pos = position;
         final ItemMainMenu item = items.get(position);
-        holder.week.setText(item.getWeek_name());
+
+
+        holder.week.setText(item.getWeek_will_opened());
+
         holder.week_numbers.setText(item.getWeek_numbers());
         locked = item.isLocked();
-        whenWillOpened = item.getWeek_name();
+        whenWillOpened = item.getWeek_will_opened();
 
         holder.itemView.setTag(position);
         if (    item.isLocked()==false){
         Glide.with(holder.itemView.getContext()).load(R.drawable.lock)
                 .thumbnail(0.5f)
                 .into(holder.image);
+
         } else {
             Glide.with(holder.itemView.getContext()).load(R.drawable.unlock)
                     .thumbnail(0.5f)

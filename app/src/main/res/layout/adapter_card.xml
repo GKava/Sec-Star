@@ -22,7 +22,7 @@
             android:textSize="25sp"
             android:textColor="#FFF"
             android:text="#Week Number"
-            android:gravity="left"
+            android:gravity="center"
             android:layout_gravity="top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

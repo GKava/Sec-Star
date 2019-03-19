@@ -16,11 +16,12 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
-import static com.challenges.battleroyale.MainActivity.SEASON_STORAGE;
+import static com.challenges.battleroyale.MainActivity.SEASON_NAME;
 import static com.challenges.battleroyale.MainActivity.WEEK1;
 import static com.challenges.battleroyale.MainActivity.WEEK10;
 import static com.challenges.battleroyale.MainActivity.WEEK10TXT;
@@ -52,7 +53,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
     private AdapterMenu adapter;
     private SharedPreferences mSettings;
     private boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10 ;
-    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage;
+    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,season_name;
+    private TextView season_name_view;
     public MainFragment() {
     }
 
@@ -72,7 +74,7 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                 Fragment fr = new ChallengesFragment();
                 Bundle args = new Bundle();
                 args.putInt("week_number", item.getWeekNumber());
-                args.putString("season_storage", seasonStorage);
+//                args.putString("season_storage", seasonStorage);
                 fr.setArguments(args);
 
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -80,7 +82,7 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                         .addToBackStack(null)
                         .commit();
             }else {
-                Toast.makeText(getContext(),"This week is locked and will open "+ item.getWeek_name(),LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"This week is locked and will open "+ item.getWeek_will_opened(),LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(getContext(),"Internet connection error :(",LENGTH_SHORT).show();
@@ -96,8 +98,7 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-
+        season_name_view = view.findViewById(R.id.season_name);
 
         mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -177,20 +178,21 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
             week10txt = mSettings.getString(WEEK10TXT, "");
         }
 
-                if (mSettings.contains(SEASON_STORAGE)) {
-            seasonStorage = mSettings.getString(SEASON_STORAGE, "");
+        if (mSettings.contains(SEASON_NAME)) {
+            season_name = mSettings.getString(SEASON_NAME, "");
         }
 
-        adapter.addMessage(new ItemMainMenu( week1txt, week1,"#1",1));
-        adapter.addMessage(new ItemMainMenu( week2txt, week2,"#2",2));
-        adapter.addMessage(new ItemMainMenu( week3txt, week3,"#3",3));
-        adapter.addMessage(new ItemMainMenu( week4txt, week4,"#4",4));
-        adapter.addMessage(new ItemMainMenu( week5txt, week5,"#5",5));
-        adapter.addMessage(new ItemMainMenu( week6txt, week6,"#6",6));
-        adapter.addMessage(new ItemMainMenu( week7txt, week7,"#7",7));
-        adapter.addMessage(new ItemMainMenu( week8txt, week8,"#8",8));
-        adapter.addMessage(new ItemMainMenu( week9txt, week9,"#9",9));
-        adapter.addMessage(new ItemMainMenu( week10txt, week10,"#10",10));
+        season_name_view.setText(season_name);
+        adapter.addMessage(new ItemMainMenu( week1txt, week1,getString(R.string.Week)+" 1",1));
+        adapter.addMessage(new ItemMainMenu( week2txt, week2,getString(R.string.Week)+" 2",2));
+        adapter.addMessage(new ItemMainMenu( week3txt, week3,getString(R.string.Week)+" 3",3));
+        adapter.addMessage(new ItemMainMenu( week4txt, week4,getString(R.string.Week)+" 4",4));
+        adapter.addMessage(new ItemMainMenu( week5txt, week5,getString(R.string.Week)+" 5",5));
+        adapter.addMessage(new ItemMainMenu( week6txt, week6,getString(R.string.Week)+" 6",6));
+        adapter.addMessage(new ItemMainMenu( week7txt, week7,getString(R.string.Week)+" 7",7));
+        adapter.addMessage(new ItemMainMenu( week8txt, week8,getString(R.string.Week)+" 8",8));
+        adapter.addMessage(new ItemMainMenu( week9txt, week9,getString(R.string.Week)+" 9",9));
+        adapter.addMessage(new ItemMainMenu( week10txt, week10,getString(R.string.Week)+" 10",10));
 
         return view;
     }

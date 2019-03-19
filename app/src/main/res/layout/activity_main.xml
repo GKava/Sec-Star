@@ -9,7 +9,7 @@
     android:background="@drawable/background_main"
     tools:context=".MainActivity">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -33,7 +33,7 @@
 
         </FrameLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -44,6 +44,9 @@
         ads:adSize="SMART_BANNER"
         ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scroll" />
+        app:layout_constraintTop_toBottomOf="@+id/scroll"
+        />
+
+
 
 </android.support.constraint.ConstraintLayout>

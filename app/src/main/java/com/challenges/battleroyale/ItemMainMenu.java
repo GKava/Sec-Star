@@ -1,7 +1,7 @@
 package com.challenges.battleroyale;
 
 public class ItemMainMenu {
-    private String week_name;
+    private String week_will_opened; // дата выхода
     boolean locked;
     private int weekNumber;
     private String week_numbers;
@@ -15,18 +15,18 @@ public class ItemMainMenu {
     }
 
     public ItemMainMenu(String week_name, boolean locked, String week_numbers, int weekNumber) {
-        this.week_name = week_name;
+        this.week_will_opened = week_name;
         this.locked = locked;
         this.week_numbers = week_numbers;
         this.weekNumber = weekNumber;
     }
 
-    public String getWeek_name() {
-        return week_name;
+    public String getWeek_will_opened() {
+        return week_will_opened;
     }
 
-    public void setWeek_name(String week_name) {
-        this.week_name = week_name;
+    public void setWeek_will_opened(String week_will_opened) {
+        this.week_will_opened = week_will_opened;
     }
 
     public boolean isLocked() {

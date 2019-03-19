@@ -7,11 +7,12 @@
     tools:context=".MainActivity">
 
         <TextView
+            android:id="@+id/season_name"
             android:textColor="#FFF"
             android:paddingTop="10dp"
             android:textSize="35sp"
             android:fontFamily="@font/lol"
-            android:text="Season 8"
+            android:text="Season"
             android:gravity="center"
             android:layout_gravity="center"
             android:layout_width="match_parent"

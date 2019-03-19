@@ -81,11 +81,6 @@
         <value>Closed</value>
     </entry>
     <entry>
-        <key>season_number</key>
-        <value>no_season_selected</value>
-    </entry>
-
-    <entry>
         <key>image_count_week1</key>
         <value>0</value>
     </entry>
@@ -124,5 +119,13 @@
     <entry>
         <key>image_count_week10</key>
         <value>0</value>
+    </entry>
+    <entry>
+        <key>season_name</key>
+        <value>Season</value>
+    </entry>
+    <entry>
+        <key>storage_path</key>
+        <value>no_season_selected</value>
     </entry>
 </defaultsMap>
