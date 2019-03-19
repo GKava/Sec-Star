@@ -1,8 +1,9 @@
 package com.challenges.battleroyale;
 
-public class Item {
+public class ItemMainMenu {
     private String week_name;
     boolean locked;
+    private int weekNumber;
     private String week_numbers;
 
     public String getWeek_numbers() {
@@ -13,10 +14,11 @@ public class Item {
         this.week_numbers = week_numbers;
     }
 
-    public Item(String week_name, boolean locked, String week_numbers) {
+    public ItemMainMenu(String week_name, boolean locked, String week_numbers, int weekNumber) {
         this.week_name = week_name;
         this.locked = locked;
         this.week_numbers = week_numbers;
+        this.weekNumber = weekNumber;
     }
 
     public String getWeek_name() {
@@ -33,5 +35,9 @@ public class Item {
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    public int getWeekNumber() {
+        return weekNumber;
     }
 }

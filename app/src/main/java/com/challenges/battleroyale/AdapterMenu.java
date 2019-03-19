@@ -15,12 +15,14 @@ import java.util.ArrayList;
 
 public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
 
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<ItemMainMenu> items = new ArrayList<ItemMainMenu>();
     private int width;
     private OnImageClickListener onImageClickListener;
+    boolean locked;
+    String whenWillOpened;
 
     public interface OnImageClickListener {
-        void onImageClick(int position);
+        void onImageClick(ItemMainMenu item);
     }
 
     public AdapterMenu(int width) {
@@ -39,12 +41,14 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
 
     @Override
     public void onBindViewHolder(@NonNull AdapterMenu.ViewHolder holder, final int position) {
-        final int pos = position;
-        final Item item = items.get(position);
+       // final int pos = position;
+        final ItemMainMenu item = items.get(position);
         holder.week.setText(item.getWeek_name());
         holder.week_numbers.setText(item.getWeek_numbers());
+        locked = item.isLocked();
+        whenWillOpened = item.getWeek_name();
 
-        holder.itemView.setTag(pos);
+        holder.itemView.setTag(position);
         if (    item.isLocked()==false){
         Glide.with(holder.itemView.getContext()).load(R.drawable.lock)
                 .thumbnail(0.5f)
@@ -54,6 +58,23 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
                     .thumbnail(0.5f)
                     .into(holder.image);
         }
+
+        holder.itemView.setTag(item);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onImageClickListener != null) {
+                    onImageClickListener.onImageClick((ItemMainMenu) view.getTag());
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onViewRecycled(@NonNull ViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.itemView.setOnClickListener(null);
     }
 
     @NonNull
@@ -65,15 +86,11 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
         lp.height = width;
         view.setLayoutParams(lp);
 
-        AdapterMenu.ViewHolder viewHolder = new AdapterMenu.ViewHolder(view);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onImageClickListener != null) {
-                    onImageClickListener.onImageClick((Integer) view.getTag());
-                }
-            }
-        });
+
+
+        final AdapterMenu.ViewHolder viewHolder = new AdapterMenu.ViewHolder(view);
+
+
 
         return viewHolder;
     }
@@ -93,7 +110,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
         }
     }
 
-    public  void addMessage(Item item) {
+    public  void addMessage(ItemMainMenu item) {
         items.add(item);
         notifyItemChanged(items.size() - 1);
     }
