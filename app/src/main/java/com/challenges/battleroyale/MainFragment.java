@@ -114,6 +114,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         adapter = new AdapterMenu(width);
         recyclerView.setAdapter(adapter);
 
+
+
                 if (mSettings.contains(WEEK1)) {
             week1 = mSettings.getBoolean(WEEK1, false);
         }
