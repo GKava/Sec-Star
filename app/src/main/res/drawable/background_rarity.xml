@@ -5,19 +5,35 @@
 
 
     <gradient
-        android:gradientRadius="900"
-        android:angle="45"
-        android:endColor="#4D143977"
-        android:centerColor="#143977"
-        android:startColor="#A62cc1ff"
-        android:centerX="0.5"
-        android:centerY="0.5"
-        android:type="radial" />
+    android:gradientRadius="800"
+    android:angle="45"
+    android:endColor="#4d143977"
+    android:centerColor="#143977"
+    android:startColor="#A62cc1ff"
+    android:centerX="0.5"
+    android:centerY="0.5"
+    android:type="radial" />
 
     <padding
         android:bottom="0dp"
         android:left="0dp"
         android:right="0dp"
         android:top="0dp" />
+
+    <!--<gradient-->
+        <!--android:gradientRadius="900"-->
+        <!--android:angle="45"-->
+        <!--android:endColor="#4D143977"-->
+        <!--android:centerColor="#143977"-->
+        <!--android:startColor="#A62cc1ff"-->
+        <!--android:centerX="0.5"-->
+        <!--android:centerY="0.5"-->
+        <!--android:type="radial" />-->
+
+    <!--<padding-->
+        <!--android:bottom="0dp"-->
+        <!--android:left="0dp"-->
+        <!--android:right="0dp"-->
+        <!--android:top="0dp" />-->
 
 </shape>

@@ -1,8 +1,12 @@
 package com.challenges.battleroyale;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -56,6 +60,9 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
         share = view.findViewById(R.id.share);
         rate = view.findViewById(R.id.rate);
         help = view.findViewById(R.id.help);
+        share.setOnClickListener(this);
+        rate.setOnClickListener(this);
+        help.setOnClickListener(this);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -220,14 +227,50 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.help:
-
+                Fragment fr = new HelpFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fr)
+                        .addToBackStack(null)
+                        .commit();
                 break;
             case R.id.rate:
-
+                createRateDialog("Rate it","Like the app?\nYou can help us and evaluate the app");
                 break;
             case R.id.share:
-
+                int applicationNameId = getContext().getApplicationInfo().labelRes;
+                final String appPackageName = getContext().getPackageName();
+                String text = getString(R.string.install_this_application, appPackageName);
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(applicationNameId));
+                sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent,"Share link:"));
                 break;
         }
     }
+
+    private void createRateDialog(String title, String content) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title);
+        builder.setMessage(content);
+        builder.setNegativeButton("Close ✖",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+
+                    }
+                });
+        builder.setPositiveButton("Rate it ★",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Uri address = Uri.parse("https://play.google.com/store/apps/details?id=battleroyale.challenges.com.secretstars");
+                        Intent openlinkIntent = new Intent(Intent.ACTION_VIEW, address);
+                        startActivity(openlinkIntent);
+                    }
+                });
+        builder.show();
+    }
+
 }

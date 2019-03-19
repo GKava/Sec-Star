@@ -4,4 +4,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="show_ad_counter_settings_key">0</string>
+    <string name="install_this_application">"Battle Pass Helper - https://play.google.com/store/apps/details?id=%s</string>
 </resources>
