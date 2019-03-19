@@ -16,6 +16,16 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@drawable/background_rarity">
+        <TextView
+            android:fontFamily="@font/font1"
+            android:id="@+id/week_numbers"
+            android:textSize="25sp"
+            android:textColor="#FFF"
+            android:text="#Week Number"
+            android:gravity="left"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:layout_margin="40dp"
@@ -32,7 +42,7 @@
             android:background="@drawable/background_epic"
             android:textSize="25sp"
             android:textColor="#FFF"
-            android:text="Will opened \n 17 december"
+            android:text="Wait"
             android:gravity="center"
             android:layout_gravity="bottom"
             android:layout_width="match_parent"

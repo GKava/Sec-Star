@@ -13,6 +13,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
 import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK1;
@@ -31,8 +32,9 @@ import static com.challenges.battleroyale.MainActivity.SEASON_STORAGE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChallengesFragment extends Fragment {
+public class ChallengesFragment extends Fragment implements View.OnClickListener{
     private int week_number;
+    private Button share,help,rate;
     private String season_storage;
     private RecyclerView recyclerView;
     private AdapterChallenges adapter;
@@ -51,6 +53,9 @@ public class ChallengesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_challenges, container, false);
         mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        share = view.findViewById(R.id.share);
+        rate = view.findViewById(R.id.rate);
+        help = view.findViewById(R.id.help);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -209,5 +214,20 @@ public class ChallengesFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.help:
+
+                break;
+            case R.id.rate:
+
+                break;
+            case R.id.share:
+
+                break;
+        }
     }
 }

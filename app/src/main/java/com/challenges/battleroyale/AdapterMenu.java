@@ -17,7 +17,6 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
 
     private ArrayList<Item> items = new ArrayList<Item>();
     private int width;
-    public static int fragment_id;
     private OnImageClickListener onImageClickListener;
 
     public interface OnImageClickListener {
@@ -43,6 +42,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
         final int pos = position;
         final Item item = items.get(position);
         holder.week.setText(item.getWeek_name());
+        holder.week_numbers.setText(item.getWeek_numbers());
 
         holder.itemView.setTag(pos);
         if (    item.isLocked()==false){
@@ -82,12 +82,14 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
         private CardView card;
         private ImageView image;
         private TextView week;
+        private TextView week_numbers;
 
         public ViewHolder(View itemView) {
             super(itemView);
             card = itemView.findViewById(R.id.card);
             image = itemView.findViewById(R.id.image);
             week =  itemView.findViewById(R.id.week);
+            week_numbers =  itemView.findViewById(R.id.week_numbers);
         }
     }
 

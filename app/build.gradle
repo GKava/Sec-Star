@@ -7,6 +7,7 @@ android {
         applicationId "com.challenges.battleroyale"
         minSdkVersion 16
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -44,7 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
-
+    implementation 'com.android.support:multidex:1.0.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

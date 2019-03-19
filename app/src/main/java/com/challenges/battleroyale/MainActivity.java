@@ -11,11 +11,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.codemybrainsout.ratingdialog.RatingDialog;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SEASON_STORAGE= "season_number";
 
     FirebaseRemoteConfig mFirebaseRemoteConfig;
-
+    InterstitialAd mInterstitialAd;
     FragmentManager fragmentManager;
     AdView mAdView;
     Handler handler = new Handler();
@@ -81,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        FirebaseApp.initializeApp(this);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        FirebaseApp.initializeApp(this);
         mSettings = this.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         mFirebaseRemoteConfig.setDefaults(R.xml.rem_cfg);
@@ -96,12 +100,17 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/4411468910");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+
         fragmentManager = getSupportFragmentManager();
         if (findViewById(R.id.fragment_container)!=null){
             if (savedInstanceState!=null){
                 return;
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SplashScreenFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MainFragment()).commit();
         }
     }
 
@@ -128,6 +137,34 @@ public class MainActivity extends AppCompatActivity {
                 }).build();
 
         ratingDialog.show();
+    }
+
+    public  void showAd(@NonNull final Runnable runnable) {
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
+            SharedPreferences preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+            int cnt = preferences.getInt(getString(R.string.show_ad_counter_settings_key), 0);
+            if (cnt >= 2) {
+                preferences.edit().putInt(getString(R.string.show_ad_counter_settings_key), 0).apply();
+
+                mInterstitialAd.setAdListener(new AdListener() {
+                    @Override
+                    public void onAdClosed() {
+                        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
+                            mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                        }
+                        runnable.run();
+                    }
+
+                });
+                mInterstitialAd.show();
+            } else {
+                preferences.edit().putInt(getString(R.string.show_ad_counter_settings_key), cnt + 1).apply();
+                runnable.run();
+            }
+
+        } else {
+            runnable.run();
+        }
     }
 
     @Override

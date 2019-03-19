@@ -1,6 +1,7 @@
 package com.challenges.battleroyale;
 
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Point;
@@ -58,13 +59,18 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
 
     @Override
     public void onImageClick(int position) {
-      //  viewAds();
+        ((MainActivity) getActivity()).showAd(new Runnable() {
+            @Override
+            public void run() {
+                if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
 
+                }
+            }
+        });
         if (hasConnection(getActivity()) == true ) {
         Fragment fr = new ChallengesFragment();
         Bundle args = new Bundle();
         args.putInt("week_number", position+1);
-        args.putString("season_storage", seasonStorage);
         args.putString("season_storage", seasonStorage);
         fr.setArguments(args);
 
@@ -87,6 +93,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+
+
         mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
 
         recyclerView = view.findViewById(R.id.recycler);
@@ -101,22 +109,84 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         adapter = new AdapterMenu(width);
         recyclerView.setAdapter(adapter);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+                if (mSettings.contains(WEEK1)) {
+            week1 = mSettings.getBoolean(WEEK1, false);
+        }
+        if (mSettings.contains(WEEK2)) {
+            week2 = mSettings.getBoolean(WEEK2, false);
+        }
+        if (mSettings.contains(WEEK3)) {
+            week3 = mSettings.getBoolean(WEEK3, false);
+        }
+        if (mSettings.contains(WEEK4)) {
+            week4 = mSettings.getBoolean(WEEK4, false);
+        }
+        if (mSettings.contains(WEEK5)) {
+            week5 = mSettings.getBoolean(WEEK5, false);
+        }
+        if (mSettings.contains(WEEK6)) {
+            week6 = mSettings.getBoolean(WEEK6, false);
+        }
+        if (mSettings.contains(WEEK7)) {
+            week7 = mSettings.getBoolean(WEEK7, false);
+        }
+        if (mSettings.contains(WEEK8)) {
+            week8 = mSettings.getBoolean(WEEK8, false);
+        }
+        if (mSettings.contains(WEEK9)) {
+            week9 = mSettings.getBoolean(WEEK9, false);
+        }
+        if (mSettings.contains(WEEK10)) {
+            week10 = mSettings.getBoolean(WEEK10, false);
+        }
+        if (mSettings.contains(WEEK1TXT)) {
+            week1txt = mSettings.getString(WEEK1TXT, "");
+        }
+        if (mSettings.contains(WEEK2TXT)) {
+            week2txt = mSettings.getString(WEEK2TXT, "");
+        }
+        if (mSettings.contains(WEEK3TXT)) {
+            week3txt = mSettings.getString(WEEK3TXT, "");
+        }
+        if (mSettings.contains(WEEK4TXT)) {
+            week4txt = mSettings.getString(WEEK4TXT, "");
+        }
+        if (mSettings.contains(WEEK5TXT)) {
+            week5txt = mSettings.getString(WEEK5TXT, "");
+        }
+        if (mSettings.contains(WEEK6TXT)) {
+            week6txt = mSettings.getString(WEEK6TXT, "");
+        }
+        if (mSettings.contains(WEEK7TXT)) {
+            week7txt = mSettings.getString(WEEK7TXT, "");
+        }
+        if (mSettings.contains(WEEK8TXT)) {
+            week8txt = mSettings.getString(WEEK8TXT, "");
+        }
+        if (mSettings.contains(WEEK9TXT)) {
+            week9txt = mSettings.getString(WEEK9TXT, "");
+        }
+        if (mSettings.contains(WEEK10TXT)) {
+            week10txt = mSettings.getString(WEEK10TXT, "");
+        }
+        if (mSettings.contains(WEEK10TXT)) {
+            week10txt = mSettings.getString(WEEK10TXT, "");
+        }
 
-        adapter.addMessage(new Item( week1txt, week1));
-        adapter.addMessage(new Item( week2txt, week2));
-        adapter.addMessage(new Item( week3txt, week3));
-        adapter.addMessage(new Item( week4txt, week4));
-        adapter.addMessage(new Item( week5txt, week5));
-        adapter.addMessage(new Item( week6txt, week6));
-        adapter.addMessage(new Item( week7txt, week7));
-        adapter.addMessage(new Item( week8txt, week8));
-        adapter.addMessage(new Item( week9txt, week9));
-        adapter.addMessage(new Item( week10txt, week10));
-            }
-        },0);
+                if (mSettings.contains(SEASON_STORAGE)) {
+            seasonStorage = mSettings.getString(SEASON_STORAGE, "");
+        }
+
+        adapter.addMessage(new Item( week1txt, week1,"#1"));
+        adapter.addMessage(new Item( week2txt, week2,"#2"));
+        adapter.addMessage(new Item( week3txt, week3,"#3"));
+        adapter.addMessage(new Item( week4txt, week4,"#4"));
+        adapter.addMessage(new Item( week5txt, week5,"#5"));
+        adapter.addMessage(new Item( week6txt, week6,"#6"));
+        adapter.addMessage(new Item( week7txt, week7,"#7"));
+        adapter.addMessage(new Item( week8txt, week8,"#8"));
+        adapter.addMessage(new Item( week9txt, week9,"#9"));
+        adapter.addMessage(new Item( week10txt, week10,"#10"));
 
         return view;
     }
@@ -155,78 +225,79 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
     @Override
     public void onStart() {
         super.onStart();
-
-        if (mSettings.contains(WEEK1)) {
-            week1 = mSettings.getBoolean(WEEK1, false);
-        }
-        if (mSettings.contains(WEEK2)) {
-            week2 = mSettings.getBoolean(WEEK2, false);
-        }
-        if (mSettings.contains(WEEK3)) {
-            week3 = mSettings.getBoolean(WEEK3, false);
-        }
-        if (mSettings.contains(WEEK4)) {
-            week4 = mSettings.getBoolean(WEEK4, false);
-        }
-        if (mSettings.contains(WEEK5)) {
-            week5 = mSettings.getBoolean(WEEK5, false);
-        }
-        if (mSettings.contains(WEEK6)) {
-            week6 = mSettings.getBoolean(WEEK6, false);
-        }
-        if (mSettings.contains(WEEK7)) {
-            week7 = mSettings.getBoolean(WEEK7, false);
-        }
-        if (mSettings.contains(WEEK8)) {
-            week8 = mSettings.getBoolean(WEEK8, false);
-        }
-        if (mSettings.contains(WEEK9)) {
-            week9 = mSettings.getBoolean(WEEK9, false);
-        }
-        if (mSettings.contains(WEEK10)) {
-            week10 = mSettings.getBoolean(WEEK10, false);
-        }
-
-        if (mSettings.contains(WEEK1TXT)) {
-            week1txt = mSettings.getString(WEEK1TXT, "");
-        }
-        if (mSettings.contains(WEEK2TXT)) {
-            week2txt = mSettings.getString(WEEK2TXT, "");
-        }
-        if (mSettings.contains(WEEK3TXT)) {
-            week3txt = mSettings.getString(WEEK3TXT, "");
-        }
-        if (mSettings.contains(WEEK4TXT)) {
-            week4txt = mSettings.getString(WEEK4TXT, "");
-        }
-        if (mSettings.contains(WEEK5TXT)) {
-            week5txt = mSettings.getString(WEEK5TXT, "");
-        }
-        if (mSettings.contains(WEEK6TXT)) {
-            week6txt = mSettings.getString(WEEK6TXT, "");
-        }
-        if (mSettings.contains(WEEK7TXT)) {
-            week7txt = mSettings.getString(WEEK7TXT, "");
-        }
-        if (mSettings.contains(WEEK8TXT)) {
-            week8txt = mSettings.getString(WEEK8TXT, "");
-        }
-        if (mSettings.contains(WEEK9TXT)) {
-            week9txt = mSettings.getString(WEEK9TXT, "");
-        }
-        if (mSettings.contains(WEEK10TXT)) {
-            week10txt = mSettings.getString(WEEK10TXT, "");
-        }
-        if (mSettings.contains(WEEK10TXT)) {
-            week10txt = mSettings.getString(WEEK10TXT, "");
-        }
-
-
-        if (mSettings.contains(SEASON_STORAGE)) {
-            seasonStorage = mSettings.getString(SEASON_STORAGE, "");
-        }
+//
+//        if (mSettings.contains(WEEK1)) {
+//            week1 = mSettings.getBoolean(WEEK1, false);
+//        }
+//        if (mSettings.contains(WEEK2)) {
+//            week2 = mSettings.getBoolean(WEEK2, false);
+//        }
+//        if (mSettings.contains(WEEK3)) {
+//            week3 = mSettings.getBoolean(WEEK3, false);
+//        }
+//        if (mSettings.contains(WEEK4)) {
+//            week4 = mSettings.getBoolean(WEEK4, false);
+//        }
+//        if (mSettings.contains(WEEK5)) {
+//            week5 = mSettings.getBoolean(WEEK5, false);
+//        }
+//        if (mSettings.contains(WEEK6)) {
+//            week6 = mSettings.getBoolean(WEEK6, false);
+//        }
+//        if (mSettings.contains(WEEK7)) {
+//            week7 = mSettings.getBoolean(WEEK7, false);
+//        }
+//        if (mSettings.contains(WEEK8)) {
+//            week8 = mSettings.getBoolean(WEEK8, false);
+//        }
+//        if (mSettings.contains(WEEK9)) {
+//            week9 = mSettings.getBoolean(WEEK9, false);
+//        }
+//        if (mSettings.contains(WEEK10)) {
+//            week10 = mSettings.getBoolean(WEEK10, false);
+//        }
+//
+//        if (mSettings.contains(WEEK1TXT)) {
+//            week1txt = mSettings.getString(WEEK1TXT, "");
+//        }
+//        if (mSettings.contains(WEEK2TXT)) {
+//            week2txt = mSettings.getString(WEEK2TXT, "");
+//        }
+//        if (mSettings.contains(WEEK3TXT)) {
+//            week3txt = mSettings.getString(WEEK3TXT, "");
+//        }
+//        if (mSettings.contains(WEEK4TXT)) {
+//            week4txt = mSettings.getString(WEEK4TXT, "");
+//        }
+//        if (mSettings.contains(WEEK5TXT)) {
+//            week5txt = mSettings.getString(WEEK5TXT, "");
+//        }
+//        if (mSettings.contains(WEEK6TXT)) {
+//            week6txt = mSettings.getString(WEEK6TXT, "");
+//        }
+//        if (mSettings.contains(WEEK7TXT)) {
+//            week7txt = mSettings.getString(WEEK7TXT, "");
+//        }
+//        if (mSettings.contains(WEEK8TXT)) {
+//            week8txt = mSettings.getString(WEEK8TXT, "");
+//        }
+//        if (mSettings.contains(WEEK9TXT)) {
+//            week9txt = mSettings.getString(WEEK9TXT, "");
+//        }
+//        if (mSettings.contains(WEEK10TXT)) {
+//            week10txt = mSettings.getString(WEEK10TXT, "");
+//        }
+//        if (mSettings.contains(WEEK10TXT)) {
+//            week10txt = mSettings.getString(WEEK10TXT, "");
+//        }
+//
+//
+//        if (mSettings.contains(SEASON_STORAGE)) {
+//            seasonStorage = mSettings.getString(SEASON_STORAGE, "");
+//        }
 
     }
+
 
     @Override
     public void onResume() {
@@ -234,5 +305,6 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         if (adapter != null) {
             adapter.setListener(this);
         }
+        recyclerView.setAdapter(adapter);
     }
 }
