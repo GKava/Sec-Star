@@ -36,11 +36,16 @@ public class HelpFragment extends Fragment {
 
         adapter = new AdapterHelpMenu();
         recyclerView.setAdapter(adapter);
-        adapter.addAsk(new ItemHelp("I can't find secret stars? Why?", ""));
-        adapter.addAsk(new ItemHelp("Ask", "otver"));
-        adapter.addAsk(new ItemHelp("Askfffffffffffffffffffffffffffffffffffffffffffffff", "otvdddddddddddddddddddddddddddddder"));
-        adapter.addAsk(new ItemHelp("Ask", "otver"));
-        adapter.addAsk(new ItemHelp("Ask", "otvfffffffffffffffffffffffffffer"));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask1), getString(R.string.ask1_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask2), getString(R.string.ask2_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask3), getString(R.string.ask3_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask4), getString(R.string.ask4_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask5), getString(R.string.ask5_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask6), getString(R.string.ask6_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask7), getString(R.string.ask7_1)));
+        adapter.addAsk(new ItemHelp(getString(R.string.ask8), getString(R.string.ask8_1)));
+//        adapter.addAsk(new ItemHelp("", ""));
+//        adapter.addAsk(new ItemHelp("", ""));
 
 
 

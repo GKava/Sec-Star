@@ -74,7 +74,6 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                 Fragment fr = new ChallengesFragment();
                 Bundle args = new Bundle();
                 args.putInt("week_number", item.getWeekNumber());
-//                args.putString("season_storage", seasonStorage);
                 fr.setArguments(args);
 
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -82,10 +81,10 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                         .addToBackStack(null)
                         .commit();
             }else {
-                Toast.makeText(getContext(),"This week is locked and will open "+ item.getWeek_will_opened(),LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getString(R.string.week_locked)+ item.getWeek_will_opened(),LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getContext(),"Internet connection error :(",LENGTH_SHORT).show();
+            Toast.makeText(getContext(),getString(R.string.internet_error),LENGTH_SHORT).show();
         }
 
 

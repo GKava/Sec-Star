@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
 import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK1;
@@ -38,7 +39,7 @@ import static com.challenges.battleroyale.MainActivity.SEASON_STORAGE;
  */
 public class ChallengesFragment extends Fragment implements View.OnClickListener{
     private int week_number;
-    private Button share,help,rate;
+    private ImageView rate,share,help;
     private String season_storage;
     private RecyclerView recyclerView;
     private AdapterChallenges adapter;

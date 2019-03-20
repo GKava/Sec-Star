@@ -61,7 +61,7 @@ public class SplashActivity extends AppCompatActivity {
     public void loadingAnimate() {
         connect++;
                 if(connect==3) {
-                    Toast toast = Toast.makeText(this, "Internet connection error :(", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(this, getString(R.string.internet_error), Toast.LENGTH_SHORT);
                     toast.show();
                     connect=0;
                 }

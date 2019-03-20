@@ -18,42 +18,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
+        <ImageView
+            android:paddingLeft="50dp"
             android:id="@+id/help"
             android:layout_margin="10dp"
-            android:background="@drawable/background_bottom_menu"
-            android:textColor="#FFF"
+            android:src="@drawable/ic_help_black_24dp"
             android:gravity="center"
-            android:textSize="20sp"
-            android:fontFamily="@font/lol"
-            android:text="HELP"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="100dp" />
-        <Button
+            android:layout_height="30dp" />
+        <ImageView
             android:id="@+id/share"
             android:layout_margin="10dp"
-            android:background="@drawable/background_bottom_menu"
-            android:textColor="#FFF"
+            android:src="@drawable/ic_share_black_24dp"
             android:gravity="center"
-            android:textSize="20sp"
-            android:fontFamily="@font/lol"
-            android:text="SHARE"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="100dp" />
-        <Button
+            android:layout_height="30dp" />
+        <ImageView
+            android:paddingRight="50dp"
             android:id="@+id/rate"
             android:layout_margin="10dp"
-            android:background="@drawable/background_bottom_menu"
-            android:textColor="#FFF"
+            android:src="@drawable/ic_stars_black_24dp"
             android:gravity="center"
-            android:textSize="20sp"
-            android:fontFamily="@font/lol"
-            android:text="RATE"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="100dp" />
+            android:layout_height="30dp" />
 
 
     </LinearLayout>
