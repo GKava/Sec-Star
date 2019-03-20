@@ -19,6 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.shopgun.android.zoomlayout.ZoomLayout;
+import com.shopgun.android.zoomlayout.ZoomOnDoubleTapListener;
 
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
 import static com.challenges.battleroyale.MainActivity.IMAGE_COUNT_WEEK1;
@@ -47,7 +51,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
     private SharedPreferences mSettings;
     private long imageCount;
     private long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
-
+    ZoomLayout mZoomLayout;
 
     public ChallengesFragment() {
         // Required empty public constructor
@@ -65,6 +69,12 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
         rate.setOnClickListener(this);
         help.setOnClickListener(this);
 
+        mZoomLayout = view.findViewById(R.id.zoomLayout);
+
+        mZoomLayout.setMinScale(1f);
+        mZoomLayout.setMaxScale(4f);
+        mZoomLayout.addOnDoubleTapListener(new ZoomOnDoubleTapListener(false));
+
         Bundle bundle = getArguments();
         if (bundle != null) {
             week_number = bundle.getInt("week_number");
@@ -72,6 +82,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
 
         recyclerView = view.findViewById(R.id.recycler);
         verticalLinearLayoutManager = new GridLayoutManager(getActivity(), 1);
+        verticalLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         verticalLinearLayoutManager.setStackFromEnd(false);
         recyclerView.setLayoutManager(verticalLinearLayoutManager);
         Display display = getActivity().getWindowManager().getDefaultDisplay();

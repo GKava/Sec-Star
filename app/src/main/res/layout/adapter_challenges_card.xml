@@ -25,6 +25,8 @@
             android:layout_gravity="center"
             app:SpinKit_Color="@color/white" />
 
+
+
         <ImageView
             android:layout_margin="5dp"
             android:id="@+id/image"

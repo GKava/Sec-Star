@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
+    <com.shopgun.android.zoomlayout.ZoomLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/zoomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         layout_constraintTop_toTopOf="parent"
@@ -13,28 +19,33 @@
         android:layout_height="match_parent"
         android:padding="0dp" />
 
+
+    </com.shopgun.android.zoomlayout.ZoomLayout>
+
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <ImageView
             android:paddingLeft="50dp"
-            android:id="@+id/help"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_help_black_24dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="30dp" />
-        <ImageView
             android:id="@+id/share"
             android:layout_margin="10dp"
             android:src="@drawable/ic_share_black_24dp"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="30dp" />
+            android:layout_height="35dp" />
+        <ImageView
+            android:id="@+id/help"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_help_black_24dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="35dp" />
         <ImageView
             android:paddingRight="50dp"
             android:id="@+id/rate"
@@ -43,7 +54,7 @@
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="30dp" />
+            android:layout_height="35dp" />
 
 
     </LinearLayout>
