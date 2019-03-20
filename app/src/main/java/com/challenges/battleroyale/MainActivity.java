@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState!=null){
                 return;
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MainFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SplashFragment()).commit();
         }
     }
 
@@ -285,17 +288,60 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseRemoteConfig.fetch().addOnCanceledListener(this, new OnCanceledListener() {
             @Override
             public void onCanceled() {
-                Toast.makeText(MainActivity.this,"Remote config  not work :|",LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,getString(R.string.internet_error),LENGTH_SHORT).show();
             }
         });
         mFirebaseRemoteConfig.fetch().addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-
+               openMainMenu();
+               // запускать в хендлере?
                 // Здесь можно обработать переход когда произойдет подгрузка из конфига
-                Toast.makeText(MainActivity.this,"Remote config is work!",LENGTH_SHORT).show();
+                 Toast.makeText(MainActivity.this,"The application has been successfully updated!",LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void openMainMenu(){
+        if (hasConnection(MainActivity.this)==true) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Fragment fr = new MainFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fr)
+//                      .addToBackStack(null)
+                            .commit();
+                }
+                },0);
+
+        }else {
+            Toast.makeText(MainActivity.this,getString(R.string.internet_error),LENGTH_SHORT).show();
+            onStart();
+        }
+
+    }
+
+
+    public static boolean hasConnection(final Context context)
+    {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        if (wifiInfo != null && wifiInfo.isConnected())
+        {
+            return true;
+        }
+        return false;
     }
 }
