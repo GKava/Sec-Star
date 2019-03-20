@@ -1,36 +1,20 @@
 package com.challenges.battleroyale;
 
-import android.content.ActivityNotFoundException;
+import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
-import com.codemybrainsout.ratingdialog.RatingDialog;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
-public class MainActivity extends AppCompatActivity {
+public class GetRomoteConfig extends Application {
     private SharedPreferences mSettings;
     public static final String APP_PREFERENCES = "mysettings";
     public static final String WEEK1= "week1";
@@ -70,25 +54,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String SEASON_STORAGE= "storage_path";
 
     FirebaseRemoteConfig mFirebaseRemoteConfig;
-    InterstitialAd mInterstitialAd;
-    FragmentManager fragmentManager;
-    AdView mAdView;
-    Handler handler = new Handler();
-    private Runnable dialogshow = new Runnable() {
-        @Override
-        public void run() {
-            rating();
-        }
-    };
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+    public void onCreate() {
+        super.onCreate();
         FirebaseApp.initializeApp(this);
         mSettings = this.getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
@@ -96,103 +64,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder().
                 setDeveloperModeEnabled(BuildConfig.DEBUG).build();
         mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        MobileAds.initialize(this,
-                "ca-app-pub-3940256099942544~3347511713");
 
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/4411468910");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
-
-        fragmentManager = getSupportFragmentManager();
-        if (findViewById(R.id.fragment_container)!=null){
-            if (savedInstanceState!=null){
-                return;
-            }
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new MainFragment()).commit();
-        }
-    }
-
-    public void rating (){
-
-        final RatingDialog ratingDialog = new RatingDialog.Builder(MainActivity.this)
-                .session(2)
-                .threshold(5)
-                .onRatingBarFormSumbit(new RatingDialog.Builder.RatingDialogFormListener() {
-                    @Override
-                    public void onFormSubmitted(String feedback) {
-                        String mailto = "mailto:vercong1@gmail.com" +
-                                "?subject=" + Uri.encode(getString(R.string.feedback)) +
-                                "&body=" + Uri.encode(feedback);
-
-                        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                        emailIntent.setData(Uri.parse(mailto));
-                        try {
-                            startActivity(emailIntent);
-                        } catch (ActivityNotFoundException ex) {
-                            Toast.makeText(MainActivity.this, ":(", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }).build();
-
-        ratingDialog.show();
-    }
-
-    public  void showAd(@NonNull final Runnable runnable) {
-        if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
-            SharedPreferences preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-            int cnt = preferences.getInt(getString(R.string.show_ad_counter_settings_key), 0);
-            if (cnt >= 5) {
-                preferences.edit().putInt(getString(R.string.show_ad_counter_settings_key), 0).apply();
-
-                mInterstitialAd.setAdListener(new AdListener() {
-                    @Override
-                    public void onAdClosed() {
-                        if (!mInterstitialAd.isLoading() && !mInterstitialAd.isLoaded()) {
-                            mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                        }
-                        runnable.run();
-                    }
-
-                });
-                mInterstitialAd.show();
-            } else {
-                preferences.edit().putInt(getString(R.string.show_ad_counter_settings_key), cnt + 1).apply();
-                runnable.run();
-            }
-
-        } else {
-            runnable.run();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mAdView.resume();
-        handler.postDelayed(dialogshow, 20000);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mAdView.destroy();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mAdView.pause();
-        handler.removeCallbacks(dialogshow);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         mFirebaseRemoteConfig.fetch(0).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -280,21 +152,6 @@ public class MainActivity extends AppCompatActivity {
 
                     editor.apply();
                 }
-            }
-        });
-        mFirebaseRemoteConfig.fetch().addOnCanceledListener(this, new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                Toast.makeText(MainActivity.this,"Remote config  not work :|",LENGTH_SHORT).show();
-            }
-        });
-        mFirebaseRemoteConfig.fetch().addOnCompleteListener(this, new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-
-                // Здесь можно обработать переход когда произойдет подгрузка из конфига
-                Toast.makeText(MainActivity.this,"Remote config is work!",LENGTH_SHORT).show();
             }
         });
     }

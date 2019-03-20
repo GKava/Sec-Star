@@ -66,6 +66,7 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
                             return false;
                         }
                     })
+//                    .override(1200, 1200)
                     .into(holder.image);
 
 

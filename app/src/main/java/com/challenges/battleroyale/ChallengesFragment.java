@@ -53,7 +53,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
     private SharedPreferences mSettings;
     private long imageCount;
     private long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
-
+    private LinearLayout help_bar;
 
     public ChallengesFragment() {
         // Required empty public constructor
@@ -67,6 +67,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
         share = view.findViewById(R.id.share);
         rate = view.findViewById(R.id.rate);
         help = view.findViewById(R.id.help);
+        help_bar = view.findViewById(R.id.help_bar);
         share.setOnClickListener(this);
         rate.setOnClickListener(this);
         help.setOnClickListener(this);
@@ -154,6 +155,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
             @Override
             public void run() {
                 String weekNum = String.valueOf(week_number);
+                help_bar.setVisibility(View.VISIBLE);
 
                 if (imageCount==1) {
                     adapter.addMessage(new ItemChallenges("week"+weekNum+"_1", season_storage));

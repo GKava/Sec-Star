@@ -37,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         loading = findViewById(R.id.loading);
         loading.setText(String.valueOf(loadTxt));
 
+
         startWork();
 
     }
@@ -55,7 +56,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }
 //        },2500);
-        },1500);
+        },1000);
     }
 
     public void loadingAnimate() {

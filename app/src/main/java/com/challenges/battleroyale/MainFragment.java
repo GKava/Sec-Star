@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,8 +53,10 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
     private LinearLayoutManager verticalLinearLayoutManager;
     private AdapterMenu adapter;
     private SharedPreferences mSettings;
-    private boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10 ;
-    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,season_name;
+    private boolean week1 = true ,week2,week3,week4,week5,week6,week7,week8,week9,week10;
+//    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,season_name;
+    private String week1txt= "Loading...",week2txt= "Loading...",week3txt= "Loading...",week4txt= "Loading...",week5txt= "Loading...",week6txt= "Loading...",week7txt= "Loading...",week8txt= "Loading...",week9txt= "Loading...",week10txt = "Loading...";
+    private String season_name = "Season";
     private TextView season_name_view;
     public MainFragment() {
     }
@@ -81,7 +84,7 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                         .addToBackStack(null)
                         .commit();
             }else {
-                Toast.makeText(getContext(),getString(R.string.week_locked)+ item.getWeek_will_opened(),LENGTH_SHORT).show();
+                Toast.makeText(getContext(),getString(R.string.week_locked)+" "+ item.getWeek_will_opened(),LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(getContext(),getString(R.string.internet_error),LENGTH_SHORT).show();
@@ -115,8 +118,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
 
 
 
-                if (mSettings.contains(WEEK1)) {
-            week1 = mSettings.getBoolean(WEEK1, false);
+            if (mSettings.contains(WEEK1)) {
+        week1 = mSettings.getBoolean(WEEK1, false);
         }
         if (mSettings.contains(WEEK2)) {
             week2 = mSettings.getBoolean(WEEK2, false);
@@ -183,6 +186,10 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
             season_name = mSettings.getString(SEASON_NAME, "");
         }
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
         season_name_view.setText(season_name);
         adapter.addMessage(new ItemMainMenu( week1txt, week1,getString(R.string.Week)+" 1",1));
         adapter.addMessage(new ItemMainMenu( week2txt, week2,getString(R.string.Week)+" 2",2));
@@ -194,6 +201,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         adapter.addMessage(new ItemMainMenu( week8txt, week8,getString(R.string.Week)+" 8",8));
         adapter.addMessage(new ItemMainMenu( week9txt, week9,getString(R.string.Week)+" 9",9));
         adapter.addMessage(new ItemMainMenu( week10txt, week10,getString(R.string.Week)+" 10",10));
+    }
+},0);
 
         return view;
     }
