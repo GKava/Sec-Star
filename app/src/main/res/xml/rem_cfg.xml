@@ -128,4 +128,8 @@
         <key>storage_path</key>
         <value>no_season_selected</value>
     </entry>
+    <entry>
+        <key>never_touch_this</key>
+        <value>false</value>
+    </entry>
 </defaultsMap>

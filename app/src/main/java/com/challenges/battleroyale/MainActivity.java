@@ -71,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String SEASON_NAME= "season_name";
     public static final String SEASON_STORAGE= "storage_path";
+    public static final String NEVER_TOUCH_THIS= "never_touch_this"; //проверка на закачку с конфига
+    private boolean never_touch_this;
 
     FirebaseRemoteConfig mFirebaseRemoteConfig;
     InterstitialAd mInterstitialAd;
@@ -84,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+//     boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10;
+//     String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage,season_name;
+//     long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     mFirebaseRemoteConfig.activateFetched();
 
+                    // если вынести их в начало то не будет работать, не передастся в другие
                     boolean week1,week2,week3,week4,week5,week6,week7,week8,week9,week10;
                     String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,seasonStorage,season_name;
                     long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
@@ -240,8 +246,8 @@ public class MainActivity extends AppCompatActivity {
                     imageCountWeek10 =  mFirebaseRemoteConfig.getLong("image_count_week10");
 
                     seasonStorage = mFirebaseRemoteConfig.getString("storage_path");
-
                     season_name = mFirebaseRemoteConfig.getString("season_name");
+                    never_touch_this = mFirebaseRemoteConfig.getBoolean("never_touch_this");
 
                     SharedPreferences.Editor editor = mSettings.edit();
 
@@ -280,6 +286,7 @@ public class MainActivity extends AppCompatActivity {
 
                     editor.putString(SEASON_STORAGE, seasonStorage);
                     editor.putString(SEASON_NAME, season_name);
+                    //editor.putBoolean(NEVER_TOUCH_THIS, never_touch_this);
 
                     editor.apply();
                 }
@@ -295,33 +302,57 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
 
-               openMainMenu();
+                if ((hasConnection(MainActivity.this) == true) & (never_touch_this == true)) {
+//                    if (never_touch_this == true) {
+//                        handler.postDelayed(new Runnable() {
+//                            @Override
+//                            public void run() {
+                                Fragment fr = new MainFragment();
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, fr)
+                                        .commit();
+//                            }
+//                        }, 0);
+//                    }else {
+//                        onStart();
+//
+//                    }
+
+                } else {
+//            Toast.makeText(MainActivity.this,getString(R.string.internet_error),LENGTH_SHORT).show();
+                    onStart();
+
+                }
+
                // запускать в хендлере?
                 // Здесь можно обработать переход когда произойдет подгрузка из конфига
-                 Toast.makeText(MainActivity.this,"The application has been successfully updated!",LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,"The application has been successfully updated!",LENGTH_SHORT).show();
             }
         });
     }
 
-    public void openMainMenu(){
-        if (hasConnection(MainActivity.this)==true) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Fragment fr = new MainFragment();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, fr)
-//                      .addToBackStack(null)
-                            .commit();
-                }
-                },0);
-
-        }else {
-            Toast.makeText(MainActivity.this,getString(R.string.internet_error),LENGTH_SHORT).show();
-            onStart();
-        }
-
-    }
+//    public void openMainMenu(){
+//        // помимо проверки интернета проверить на получение данных
+//        if (hasConnection(MainActivity.this) == true) {
+//
+//
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    Fragment fr = new MainFragment();
+//                    getSupportFragmentManager().beginTransaction()
+//                            .replace(R.id.fragment_container, fr)
+//                            .commit();
+//                }
+//                },0);
+//
+//
+//
+//        } else {
+////            Toast.makeText(MainActivity.this,getString(R.string.internet_error),LENGTH_SHORT).show();
+//            onStart();
+//        }
+//    }
 
 
     public static boolean hasConnection(final Context context)
