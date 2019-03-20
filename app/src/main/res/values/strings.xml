@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Secretstars</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="show_ad_counter_settings_key">0</string>
     <string name="install_this_application">"Battle Pass Helper - https://play.google.com/store/apps/details?id=%s</string>
     <string name="Week">Week</string>
@@ -24,5 +21,11 @@
     <string name="ask8_1">Чтобы получить боевой пропуск, вам нужно зайти в игру и купить его в ней.</string>
     <string name="week_locked">This week is locked and will open</string>
     <string name="internet_error">Internet connection error :(</string>
+    <string name="close_rating_dialog">Close ✖</string>
+    <string name="open_rating_dialog">Rate it ★</string>
+    <string name="share">Share link:</string>
+    <string name="rate_dialog_title">Rate it</string>
+    <string name="ratind_dialog_content">Like the app?\nYou can help us and evaluate the app</string>
+    <string name="feedback">Creative Mode user feedback</string>
 
 </resources>

@@ -18,6 +18,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.shopgun.android.zoomlayout.ZoomLayout;
+import com.shopgun.android.zoomlayout.ZoomOnDoubleTapListener;
 
 import org.w3c.dom.Text;
 
@@ -65,6 +67,8 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
                         }
                     })
                     .into(holder.image);
+
+
     }
 
     @NonNull
@@ -89,12 +93,20 @@ public class AdapterChallenges extends RecyclerView.Adapter<AdapterChallenges.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView image;
         private ProgressBar progress_bar;
+        private ZoomLayout mZoomLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             progress_bar =  itemView.findViewById(R.id.progress_bar);
+            mZoomLayout = itemView.findViewById(R.id.zoomLayout);
+
+
+            mZoomLayout.setMinScale(1f);
+            mZoomLayout.setMaxScale(4f);
+            mZoomLayout.addOnDoubleTapListener(new ZoomOnDoubleTapListener(false));
         }
+
 
         public void progressVisibitity(boolean b){
             if (b == true) {

@@ -25,7 +25,11 @@
             android:layout_gravity="center"
             app:SpinKit_Color="@color/white" />
 
-
+        <com.shopgun.android.zoomlayout.ZoomLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/zoomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <ImageView
             android:layout_margin="5dp"
@@ -37,7 +41,7 @@
             android:src="@drawable/lock"
             />
 
-
+        </com.shopgun.android.zoomlayout.ZoomLayout>
 
 
     </FrameLayout>

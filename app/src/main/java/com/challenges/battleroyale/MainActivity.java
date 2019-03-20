@@ -1,5 +1,6 @@
 package com.challenges.battleroyale;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -121,15 +122,15 @@ public class MainActivity extends AppCompatActivity {
                 .onRatingBarFormSumbit(new RatingDialog.Builder.RatingDialogFormListener() {
                     @Override
                     public void onFormSubmitted(String feedback) {
-                        String mailto = "mailto:POCHTA" +
-                                "?subject=" + Uri.encode("Creative Mode user feedback") +
+                        String mailto = "mailto:vercong1@gmail.com" +
+                                "?subject=" + Uri.encode(getString(R.string.feedback)) +
                                 "&body=" + Uri.encode(feedback);
 
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                         emailIntent.setData(Uri.parse(mailto));
                         try {
                             startActivity(emailIntent);
-                        } catch (android.content.ActivityNotFoundException ex) {
+                        } catch (ActivityNotFoundException ex) {
                             Toast.makeText(MainActivity.this, ":(", Toast.LENGTH_SHORT).show();
                         }
                     }

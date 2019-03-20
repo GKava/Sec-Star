@@ -17,6 +17,8 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +53,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
     private SharedPreferences mSettings;
     private long imageCount;
     private long imageCountWeek1,imageCountWeek2,imageCountWeek3,imageCountWeek4,imageCountWeek5,imageCountWeek6,imageCountWeek7,imageCountWeek8,imageCountWeek9,imageCountWeek10;
-    ZoomLayout mZoomLayout;
+
 
     public ChallengesFragment() {
         // Required empty public constructor
@@ -69,11 +71,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
         rate.setOnClickListener(this);
         help.setOnClickListener(this);
 
-        mZoomLayout = view.findViewById(R.id.zoomLayout);
 
-        mZoomLayout.setMinScale(1f);
-        mZoomLayout.setMaxScale(4f);
-        mZoomLayout.addOnDoubleTapListener(new ZoomOnDoubleTapListener(false));
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -231,9 +229,16 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
             }
         },0);
 
-
+        animateHelpView();
         return view;
     }
+
+    public void animateHelpView(){
+        Animation animation = null;
+        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.game_view);
+        help.startAnimation(animation);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -246,7 +251,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
                         .commit();
                 break;
             case R.id.rate:
-                createRateDialog("Rate it","Like the app?\nYou can help us and evaluate the app");
+                createRateDialog(getString(R.string.rate_dialog_title),getString(R.string.ratind_dialog_content));
                 break;
             case R.id.share:
                 int applicationNameId = getContext().getApplicationInfo().labelRes;
@@ -257,7 +262,7 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
                 sendIntent.putExtra(Intent.EXTRA_SUBJECT, getContext().getString(applicationNameId));
                 sendIntent.putExtra(Intent.EXTRA_TEXT, text);
                 sendIntent.setType("text/plain");
-                startActivity(Intent.createChooser(sendIntent,"Share link:"));
+                startActivity(Intent.createChooser(sendIntent,getString(R.string.share)));
                 break;
         }
     }
@@ -266,14 +271,14 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(title);
         builder.setMessage(content);
-        builder.setNegativeButton("Close ✖",
+        builder.setNegativeButton(getString(R.string.close_rating_dialog),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
 
                     }
                 });
-        builder.setPositiveButton("Rate it ★",
+        builder.setPositiveButton(getString(R.string.open_rating_dialog),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
