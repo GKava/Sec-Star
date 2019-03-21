@@ -295,14 +295,12 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-                    // ***** проверка, нужно когда запускаешь 1 раз без интернета и включаешь его в ходу загрузки
+                    // проверка, нужна когда запускаешь 1 раз без интернета и включаешь его в ходу загрузки
                     if (never_touch_this==true) {
                         openMainMenu();
                     } else {
                         getConfig();
                     }
-
-
             }
         });
 

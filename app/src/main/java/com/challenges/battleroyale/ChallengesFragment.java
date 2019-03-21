@@ -1,6 +1,7 @@
 package com.challenges.battleroyale;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -246,6 +247,14 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.help:
+                ((MainActivity) getActivity()).showAd(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+
+                        }
+                    }
+                });
                 Fragment fr = new HelpFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, fr)
@@ -284,7 +293,9 @@ public class ChallengesFragment extends Fragment implements View.OnClickListener
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Uri address = Uri.parse("https://play.google.com/store/apps/details?id=battleroyale.challenges.com.secretstars");
+                        final String appPackageName = getContext().getPackageName();
+                        String text = getString(R.string.rate_app, appPackageName);
+                        Uri address = Uri.parse(text);
                         Intent openlinkIntent = new Intent(Intent.ACTION_VIEW, address);
                         startActivity(openlinkIntent);
                     }

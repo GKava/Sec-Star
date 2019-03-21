@@ -85,13 +85,12 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
     @NonNull
     @Override
     public AdapterMenu.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, final int viewType) {
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_card, parent, false);
 
         RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) view.getLayoutParams();
         lp.height = width;
         view.setLayoutParams(lp);
-
-
 
         final AdapterMenu.ViewHolder viewHolder = new AdapterMenu.ViewHolder(view);
 

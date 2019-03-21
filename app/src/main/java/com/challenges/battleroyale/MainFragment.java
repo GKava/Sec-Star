@@ -54,7 +54,6 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
     private AdapterMenu adapter;
     private SharedPreferences mSettings;
     private boolean week1 = true ,week2,week3,week4,week5,week6,week7,week8,week9,week10;
-//    private String week1txt,week2txt,week3txt,week4txt,week5txt,week6txt,week7txt,week8txt,week9txt,week10txt,season_name;
     private String week1txt= "Loading...",week2txt= "Loading...",week3txt= "Loading...",week4txt= "Loading...",week5txt= "Loading...",week6txt= "Loading...",week7txt= "Loading...",week8txt= "Loading...",week9txt= "Loading...",week10txt = "Loading...";
     private String season_name;
     private TextView season_name_view;

@@ -2,6 +2,7 @@
     <string name="app_name">Secretstars</string>
     <string name="show_ad_counter_settings_key">0</string>
     <string name="install_this_application">"Battle Pass Helper - https://play.google.com/store/apps/details?id=%s</string>
+    <string name="rate_app">"https://play.google.com/store/apps/details?id=%s</string>
     <string name="Week">Week</string>
     <string name="ask1">Будут ли подсказки для следующего сезона?</string>
     <string name="ask1_1">Да, как только закончится текущий сезон, в приложение будут доступны подсказки для следующего.</string>

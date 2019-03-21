@@ -44,8 +44,6 @@ public class HelpFragment extends Fragment {
         adapter.addAsk(new ItemHelp(getString(R.string.ask6), getString(R.string.ask6_1)));
         adapter.addAsk(new ItemHelp(getString(R.string.ask7), getString(R.string.ask7_1)));
         adapter.addAsk(new ItemHelp(getString(R.string.ask8), getString(R.string.ask8_1)));
-//        adapter.addAsk(new ItemHelp("", ""));
-//        adapter.addAsk(new ItemHelp("", ""));
 
 
 
