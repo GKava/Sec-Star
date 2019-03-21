@@ -17,24 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:paddingRight="3dp"
-        android:paddingLeft="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:background="@drawable/background_rarity">
+    <!--<LinearLayout-->
+        <!--android:paddingRight="3dp"-->
+        <!--android:paddingLeft="3dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="70dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:background="@drawable/background_rarity">-->
 
-        <TextView
-            android:textColor="#FFF"
-            android:paddingTop="10dp"
-            android:textSize="35sp"
-            android:fontFamily="@font/lol"
-            android:text="Event challenges"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:textColor="#FFF"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:textSize="35sp"-->
+            <!--android:fontFamily="@font/lol"-->
+            <!--android:text="Event challenges"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+    <!--</LinearLayout>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
