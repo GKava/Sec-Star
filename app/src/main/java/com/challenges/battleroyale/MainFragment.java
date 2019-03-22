@@ -246,6 +246,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
         if (adapter != null) {
             adapter.setListener(this);
         }
-        recyclerView.setAdapter(adapter);
+        if (getActivity() != null) {
+            ((MainActivity) getActivity()).getConfig();
+        }
     }
 }

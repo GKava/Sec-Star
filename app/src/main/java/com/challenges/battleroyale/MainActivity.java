@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
     FragmentManager fragmentManager;
     AdView mAdView;
+
     Handler handler = new Handler();
     private Runnable dialogshow = new Runnable() {
         @Override
@@ -91,9 +92,9 @@ public class MainActivity extends AppCompatActivity {
             rating();
         }
     };
+
     boolean never_touch_this;
     private BroadcastReceiver br;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void rating (){
-
         final RatingDialog ratingDialog = new RatingDialog.Builder(MainActivity.this)
                 .session(2)
                 .threshold(5)
@@ -151,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }).build();
-
         ratingDialog.show();
     }
 
@@ -177,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
                 preferences.edit().putInt(getString(R.string.show_ad_counter_settings_key), cnt + 1).apply();
                 runnable.run();
             }
-
         } else {
             runnable.run();
         }
@@ -331,8 +329,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-
     public void openMainMenu(){
         if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
             Fragment fr = new MainFragment();
@@ -344,27 +340,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-//    public static boolean hasConnection(final Context context)
-//    {
-//        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-//        if (wifiInfo != null && wifiInfo.isConnected())
-//        {
-//            return true;
-//        }
-//        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-//        if (wifiInfo != null && wifiInfo.isConnected())
-//        {
-//            return true;
-//        }
-//        wifiInfo = cm.getActiveNetworkInfo();
-//        if (wifiInfo != null && wifiInfo.isConnected())
-//        {
-//            return true;
-//        }
-//        return false;
-//    }
 
     private void checkInternetConnection() {
         if (br == null) {
@@ -383,10 +358,10 @@ public class MainActivity extends AppCompatActivity {
                             + state.toString());
 
                     if (state == NetworkInfo.State.CONNECTED) {
-                        Toast.makeText(getApplicationContext(), "Internet connection is on", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.updated), Toast.LENGTH_LONG).show();
                         getConfig();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Internet connection is Off", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.internet_error), Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -397,6 +372,4 @@ public class MainActivity extends AppCompatActivity {
             registerReceiver(br, intentFilter);
         }
     }
-
-
 }
