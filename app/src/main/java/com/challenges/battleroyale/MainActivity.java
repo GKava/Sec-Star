@@ -1,8 +1,11 @@
 package com.challenges.battleroyale;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -14,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String IMAGE_COUNT_WEEK9= "image_count_week9";
     public static final String IMAGE_COUNT_WEEK10= "image_count_week0";
 
+    public static final String PREF_DATA_LOADED= "pref_data_loaded";
+
     public static final String SEASON_NAME= "season_name";
     public static final String SEASON_STORAGE= "storage_path";
     public static final String NEVER_TOUCH_THIS= "never_touch_this"; //проверка на закачку с конфига
@@ -86,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     boolean never_touch_this;
+    private BroadcastReceiver br;
 
 
     @Override
@@ -113,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
         mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/4411468910");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
+        getConfig();
 
         fragmentManager = getSupportFragmentManager();
-        if (findViewById(R.id.fragment_container)!=null){
-            if (savedInstanceState!=null){
-                return;
+        if (savedInstanceState == null) {
+            if (!mSettings.getBoolean(PREF_DATA_LOADED, false)) {
+                fragmentManager.beginTransaction().add(R.id.fragment_container, new SplashFragment()).commit();
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, new SplashFragment()).commit();
         }
     }
 
@@ -181,12 +188,22 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mAdView.resume();
         handler.postDelayed(dialogshow, 20000);
+        if (mSettings.getBoolean(PREF_DATA_LOADED, false)) {
+            openMainMenu();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mAdView.destroy();
+        if (br != null) {
+            try {
+                unregisterReceiver(br);
+            } catch (Exception e) {
+                //
+            }
+        }
     }
 
     @Override
@@ -199,9 +216,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        getConfig();
-
     }
+
     public void getConfig(){
         mFirebaseRemoteConfig.fetch(0).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -252,8 +268,6 @@ public class MainActivity extends AppCompatActivity {
                     season_name = mFirebaseRemoteConfig.getString("season_name");
                     never_touch_this = mFirebaseRemoteConfig.getBoolean("never_touch_this");
 
-
-
                     editor.putBoolean(WEEK1, week1);
                     editor.putBoolean(WEEK2, week2);
                     editor.putBoolean(WEEK3, week3);
@@ -291,46 +305,98 @@ public class MainActivity extends AppCompatActivity {
                     editor.putString(SEASON_NAME, season_name);
                     editor.putBoolean(NEVER_TOUCH_THIS, never_touch_this);
 
+                    editor.putBoolean(PREF_DATA_LOADED, true);
+
                     editor.apply();
 
-                }
+                    if (br != null) {
+                        try {
+                            unregisterReceiver(br);
+                            br = null;
+                        } catch (Exception e) {
+                            //
+                        }
+                    }
 
-                    // проверка, нужна когда запускаешь 1 раз без интернета и включаешь его в ходу загрузки
-                    if (never_touch_this==true) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    if (fm.findFragmentByTag("MainFragment") == null) {
                         openMainMenu();
                     } else {
-                        getConfig();
+                        ((MainFragment) fm.findFragmentByTag("MainFragment")).update();
                     }
+                } else {
+                    checkInternetConnection();
+                }
             }
         });
-
     }
+
+
 
     public void openMainMenu(){
-    Fragment fr = new MainFragment();
-    getSupportFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, fr)
-            .commit();
+        if (getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.STARTED)) {
+            Fragment fr = new MainFragment();
+            FragmentManager fm = getSupportFragmentManager();
+            if (fm.findFragmentByTag("MainFragment") == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fr, "MainFragment")
+                        .commit();
+            }
+        }
     }
 
-    public static boolean hasConnection(final Context context)
-    {
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
-            return true;
+//    public static boolean hasConnection(final Context context)
+//    {
+//        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+//        if (wifiInfo != null && wifiInfo.isConnected())
+//        {
+//            return true;
+//        }
+//        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//        if (wifiInfo != null && wifiInfo.isConnected())
+//        {
+//            return true;
+//        }
+//        wifiInfo = cm.getActiveNetworkInfo();
+//        if (wifiInfo != null && wifiInfo.isConnected())
+//        {
+//            return true;
+//        }
+//        return false;
+//    }
+
+    private void checkInternetConnection() {
+        if (br == null) {
+            br = new BroadcastReceiver() {
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    Bundle extras = intent.getExtras();
+
+                    NetworkInfo info = (NetworkInfo) extras
+                            .getParcelable("networkInfo");
+
+                    NetworkInfo.State state = info.getState();
+                    Log.d("TEST Internet", info.toString() + " "
+                            + state.toString());
+
+                    if (state == NetworkInfo.State.CONNECTED) {
+                        Toast.makeText(getApplicationContext(), "Internet connection is on", Toast.LENGTH_LONG).show();
+                        getConfig();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Internet connection is Off", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            };
+
+            final IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(br, intentFilter);
         }
-        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
-            return true;
-        }
-        wifiInfo = cm.getActiveNetworkInfo();
-        if (wifiInfo != null && wifiInfo.isConnected())
-        {
-            return true;
-        }
-        return false;
     }
+
+
 }

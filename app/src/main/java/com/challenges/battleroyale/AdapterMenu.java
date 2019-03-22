@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
 
@@ -114,9 +115,15 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder>  {
         }
     }
 
-    public  void addMessage(ItemMainMenu item) {
-        items.add(item);
-        notifyItemChanged(items.size() - 1);
+    public void setMessages(List<ItemMainMenu> menuList)  {
+        items.clear();
+        items.addAll(menuList);
+        notifyDataSetChanged();
     }
+
+//    public  void addMessage(ItemMainMenu item) {
+//        items.add(item);
+//        notifyItemChanged(items.size() - 1);
+//    }
 }
 

@@ -20,6 +20,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.widget.Toast.LENGTH_SHORT;
 import static com.challenges.battleroyale.MainActivity.APP_PREFERENCES;
 import static com.challenges.battleroyale.MainActivity.SEASON_NAME;
@@ -92,33 +95,9 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
 
     }
 
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        season_name_view = view.findViewById(R.id.season_name);
-
-        mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-
-        recyclerView = view.findViewById(R.id.recycler);
-        verticalLinearLayoutManager = new GridLayoutManager(getActivity(), 2);
-        verticalLinearLayoutManager.setStackFromEnd(false);
-        recyclerView.setLayoutManager(verticalLinearLayoutManager);
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x/2;
-
-        adapter = new AdapterMenu(width);
-        recyclerView.setAdapter(adapter);
-
-
-
-            if (mSettings.contains(WEEK1)) {
-        week1 = mSettings.getBoolean(WEEK1, false);
+    public void update() {
+        if (mSettings.contains(WEEK1)) {
+            week1 = mSettings.getBoolean(WEEK1, false);
         }
         if (mSettings.contains(WEEK2)) {
             week2 = mSettings.getBoolean(WEEK2, false);
@@ -185,23 +164,44 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
             season_name = mSettings.getString(SEASON_NAME, "");
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
         season_name_view.setText(season_name);
-        adapter.addMessage(new ItemMainMenu( week1txt, week1,getString(R.string.Week)+" 1",1));
-        adapter.addMessage(new ItemMainMenu( week2txt, week2,getString(R.string.Week)+" 2",2));
-        adapter.addMessage(new ItemMainMenu( week3txt, week3,getString(R.string.Week)+" 3",3));
-        adapter.addMessage(new ItemMainMenu( week4txt, week4,getString(R.string.Week)+" 4",4));
-        adapter.addMessage(new ItemMainMenu( week5txt, week5,getString(R.string.Week)+" 5",5));
-        adapter.addMessage(new ItemMainMenu( week6txt, week6,getString(R.string.Week)+" 6",6));
-        adapter.addMessage(new ItemMainMenu( week7txt, week7,getString(R.string.Week)+" 7",7));
-        adapter.addMessage(new ItemMainMenu( week8txt, week8,getString(R.string.Week)+" 8",8));
-        adapter.addMessage(new ItemMainMenu( week9txt, week9,getString(R.string.Week)+" 9",9));
-        adapter.addMessage(new ItemMainMenu( week10txt, week10,getString(R.string.Week)+" 10",10));
+        List<ItemMainMenu> menuList = new ArrayList<>();
+
+        menuList.add(new ItemMainMenu( week1txt, week1,getString(R.string.Week)+" 1",1));
+        menuList.add(new ItemMainMenu( week2txt, week2,getString(R.string.Week)+" 2",2));
+        menuList.add(new ItemMainMenu( week3txt, week3,getString(R.string.Week)+" 3",3));
+        menuList.add(new ItemMainMenu( week4txt, week4,getString(R.string.Week)+" 4",4));
+        menuList.add(new ItemMainMenu( week5txt, week5,getString(R.string.Week)+" 5",5));
+        menuList.add(new ItemMainMenu( week6txt, week6,getString(R.string.Week)+" 6",6));
+        menuList.add(new ItemMainMenu( week7txt, week7,getString(R.string.Week)+" 7",7));
+        menuList.add(new ItemMainMenu( week8txt, week8,getString(R.string.Week)+" 8",8));
+        menuList.add(new ItemMainMenu( week9txt, week9,getString(R.string.Week)+" 9",9));
+        menuList.add(new ItemMainMenu( week10txt, week10,getString(R.string.Week)+" 10",10));
+        adapter.setMessages(menuList);
     }
-},0);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        season_name_view = view.findViewById(R.id.season_name);
+
+        mSettings = this.getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
+        recyclerView = view.findViewById(R.id.recycler);
+        verticalLinearLayoutManager = new GridLayoutManager(getActivity(), 2);
+        verticalLinearLayoutManager.setStackFromEnd(false);
+        recyclerView.setLayoutManager(verticalLinearLayoutManager);
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x/2;
+
+        adapter = new AdapterMenu(width);
+        recyclerView.setAdapter(adapter);
+
+        update();
 
         return view;
     }
