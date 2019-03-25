@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         if (mInterstitialAd != null && mInterstitialAd.isLoaded()) {
             SharedPreferences preferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
             int cnt = preferences.getInt(getString(R.string.show_ad_counter_settings_key), 0);
-            if (cnt >= 5) {
+            if (cnt >= 2) {
                 preferences.edit().putInt(getString(R.string.show_ad_counter_settings_key), 0).apply();
 
                 mInterstitialAd.setAdListener(new AdListener() {
