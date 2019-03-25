@@ -359,6 +359,9 @@ public class MainActivity extends AppCompatActivity {
 
                     if (state == NetworkInfo.State.CONNECTED) {
                         Toast.makeText(getApplicationContext(), getString(R.string.updated), Toast.LENGTH_LONG).show();
+                        mInterstitialAd = new InterstitialAd(MainActivity.this);
+                        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/4411468910");
+                        mInterstitialAd.loadAd(new AdRequest.Builder().build());
                         getConfig();
                     } else {
                         Toast.makeText(getApplicationContext(), getString(R.string.internet_error), Toast.LENGTH_LONG).show();
