@@ -73,8 +73,8 @@ public class MainFragment extends Fragment  implements AdapterMenu.OnImageClickL
                 }
             }
         });
-        if (hasConnection(getActivity()) == true ) {
 
+        if (hasConnection(getActivity()) == true ) {
             if (item.isLocked()) {
                 Fragment fr = new ChallengesFragment();
                 Bundle args = new Bundle();
